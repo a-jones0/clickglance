@@ -1,0 +1,75 @@
+<!-- Foresight: A Calendar/To-Do List App -->
+<!-- Project started: 03/15/2023 -->
+
+<!DOCTYPE html>
+<html lang="en-us">
+    <head>
+        <meta charset="utf-8">
+        <!-- Ensures that website adjusts to display on mobile devices properly -->
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+        <title>Foresight</title>
+    
+        <link rel="stylesheet" href="style.css">
+    </head>
+    <body>
+        <header>
+            <div id="header-label">
+                <div id="header-dropdown">
+                    <div id="header-dropdown-label">
+                        <button id="header-text">YEAR MONTH</button>
+                        <button id="header-dropdown-label-caret">&darr;</button>
+                    </div>
+                    <div class="dropdown-contents" id="header-dropdown-contents">
+                        <div id="header-dropdown-navbar">
+                            <p id="header-dropdown-navbar-year">YEAR</p>
+                            <div id="header-dropdown-navbar-icons">
+                                <button class="dropdown-nav-arrow" id="dropdown-up-button">&uarr;</button>
+                                <button class="dropdown-nav-arrow" id="dropdown-down-button">&darr;</button>
+                            </div>
+                        </div>
+                        <div id="header-dropdown-grid">
+                            <div id="header-dropdown-row0">
+                                <button class="date-jump-button" id="jan-button">Jan</button>
+                                <button class="date-jump-button" id="feb-button">Feb</button>
+                                <button class="date-jump-button" id="mar-button">Mar</button>
+                                <button class="date-jump-button" id="apr-button">Apr</button>
+                            </div>
+                            <div id="header-dropdown-row1">
+                                <button class="date-jump-button" id="may-button">May</button>
+                                <button class="date-jump-button" id="jun-button">Jun</button>
+                                <button class="date-jump-button" id="jul-button">Jul</button>
+                                <button class="date-jump-button" id="aug-button">Aug</button>
+                            </div>
+                            <div id="header-dropdown-row2">
+                                <button class="date-jump-button" id="sep-button">Sep</button>
+                                <button class="date-jump-button" id="oct-button">Oct</button>
+                                <button class="date-jump-button" id="nov-button">Nov</button>
+                                <button class="date-jump-button" id="dec-button">Dec</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div id="header-buttons">
+                <button class="header-buttons" id="today-button">Today</button>
+                <button class="header-buttons month-button" id="prev-month-button"><</button>
+                <button class="header-buttons month-button" id="next-month-button">></button>
+            </div>
+        </header>
+        <div id="calendar-grid">
+            <div id="weekdays-grid-heading">
+                <div class="weekday-label grid-cell" id="sunday">    Sunday    </div>
+                <div class="weekday-label grid-cell" id="monday">    Monday    </div>
+                <div class="weekday-label grid-cell" id="tuesday">   Tuesday   </div>
+                <div class="weekday-label grid-cell" id="wednesday"> Wednesday </div>
+                <div class="weekday-label grid-cell" id="thursday">  Thursday  </div>
+                <div class="weekday-label grid-cell" id="friday">    Friday    </div>
+                <div class="weekday-label grid-cell" id="saturday">  Saturday  </div>
+            </div>
+            <div id="weeks-grid"></div>
+        </div>
+        <script src="script.js"></script>
+    </body>
+
+</html>

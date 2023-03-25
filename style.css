@@ -1,0 +1,226 @@
+* {
+    box-sizing: border-box;
+}
+
+:root {
+    --background-color: white;
+    --heading-label-color: black;
+    --weekday-label-color: black;
+    --label-button-hover-color: lightgray;
+    --calendar-grid-color: black;
+    --date-color: black;
+    --today-accent-color: blue;
+    --highlighted-day-color: aquamarine;
+}
+
+/* container w/two rows: header & calendar grid*/
+body {
+    display: flex;
+    flex-direction: column;
+    margin-left: 8%;
+    margin-right: 8%;
+    background-color: beige;
+}
+
+/* body-item, container w/two columns: header-text & header_toolbar*/
+header {
+    display: flex;
+    flex-direction: row;
+    font-size: larger;
+    align-items: center;
+}
+
+#header-label {
+    display: flex;
+    flex-grow: 1;
+    justify-content: center;
+    text-align: center;
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+    
+}
+
+#header-dropdown-label {
+    display: flex;
+    align-items: center;
+    padding: 5px 2px 5px 2px; /* top right bottom left*/
+    border-radius: 4px;
+    max-height: 50px;
+}
+
+#header-dropdown-label:hover {
+    background-color: lightgray;
+    cursor: pointer;
+}
+
+#header-text {
+    font-size: 27px;
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+    background: none;
+    border: none; 
+}
+
+#header-text:hover {
+    cursor: pointer;
+}
+
+#header-dropdown-label-caret {
+    font-size: small;
+    border: none;
+    background: none;
+    color: black;
+    margin-left: 5px;
+}
+
+#header-dropdown-label-caret:hover {
+    cursor: pointer;
+}
+
+.dropdown-contents{
+    display: none;
+    border: 1px solid gray;
+    border-radius: 8px;
+    padding-bottom: 5px;
+}
+
+/* Add this class to header-dropdown-contents to show the date-jump menu*/
+.dropdown-contents-show {
+    display: block;
+    position: absolute;
+    background-color:whitesmoke;
+    z-index: 100;
+}
+
+/* Add a quick fade-in animation when dropdown appears */
+.dropdown-contents-show-animate {}
+
+#header-dropdown-contents {
+    width: 165px;
+}
+
+#header-dropdown-navbar {
+    display: flex;
+    align-items: center;
+    max-height: 40px;
+    
+}
+
+#header-dropdown-navbar-year {
+    flex-grow: 1;
+    text-align: left;
+    margin-left: 10px;
+}
+
+#header-dropdown-navbar-icons {
+    display: flex;
+    }
+
+.dropdown-nav-arrow {
+    padding: 3px 10px 10px 10px; /* top right bottom left*/
+    border-radius: 2px;
+    background: none;
+    border: none;
+}
+
+.dropdown-nav-arrow:hover {
+    background-color: lightgray;
+    cursor: pointer;
+}
+
+#header-dropdown-grid {
+    border-top: 1px solid lightgray;
+}
+
+button.date-jump-button {
+    background:none;
+    width: 35px;
+    height: 35px;
+    border: none;
+    border-radius: 2px;
+    }
+
+button.date-jump-button:hover {
+    background-color: lightgray;
+    cursor: pointer;
+    }
+
+button.header-buttons {
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+    font-size: large;
+    padding: 5px 10px;
+    border-radius: 4px;
+    background: none;
+}
+
+button.header-buttons:hover {
+    background-color: lightgray;
+    cursor: pointer;
+}
+
+.month-button {
+    border: none;
+}
+
+#today-button {
+    border: 1px solid black;
+    padding: 5px 15px;
+}
+
+#today-button:hover {
+    background-color: lightgray;
+    }
+
+/* body-item, container w/5 rows: weekday heading and 4 weeks*/
+#calendar-grid {
+    display: flex;
+    flex-direction: column;
+    margin-top: 10px;
+}
+
+/* calendar-grid item, container w/7 columns, 1 for each weekday*/
+#weekdays-grid-heading {
+    display: flex;
+    flex: 1 1 0%;
+    max-height: 30px;
+}
+
+.weekday-label {
+    flex: 1 1 0%;
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif ;
+    font-size: medium;
+    
+}
+
+#weeks-grid {
+    border-width: 0 1px 0 1px;  /*top, right, bottom, left*/
+    border-style: solid;
+}
+
+/* calendar-grid item, container w/7 columns, 1 for each weekday*/
+.week {
+    display: flex;
+    flex-grow: 0; 
+    flex-shrink: 1;
+}
+
+#week1 {
+    border-width: 1px 0 0 0;
+    border-style: solid;
+}
+
+/* week-item*/
+.day {
+    flex: 1 1 0%;
+    border-width: 0 0 1px 0;  /*top, right, bottom, left*/
+    border-style: solid;
+    aspect-ratio: 16/9;
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+    padding: 5px;
+}
+
+.todays-date {
+    border-top: 2px solid blue;
+}
+
+.highlighted-date {
+    background-color:aquamarine
+}
