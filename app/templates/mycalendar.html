@@ -1,0 +1,298 @@
+{% extends "index.html" %}
+
+{% block title %} My Calendar - ClickGlance {% endblock %}
+
+{% block head %}
+        {{ super() }}
+{% endblock %}
+
+{% block header_buttons_form_action %}
+/mycalendar
+{% endblock %}
+
+{% block header_buttons_form_inputs %}
+<input type="button" class="header-buttons save-button" id="changed-items-save-button" value="Save Changes" name="changed-items-save-button">
+{% endblock %}
+
+{% block sidebar_content %}
+    <div class="sidebar-section" id="sidebar-main-links-section">
+        <button class="material-icons sidebar-link" id="open-sidebar-btn">
+            <span class="open-menu-icon"  id="menu-icon">menu</span>
+            <span class="close-menu-icon" id="close-icon">close</span>
+        </button>
+        <div id="user-circle-name">
+            <div class="sidebar-icon-container" id="logged-in-user-circle">
+                <p>{{username[0]}}</p>
+            </div>
+            <div class="sidebar-link-label" id="sign-in-label">{{username}}</div>
+        </div>
+        <button class="sidebar-link"  id="account-link">
+            <div class="sidebar-icon-container">
+                <i class="material-icons">manage_accounts</i>
+            </div>
+            <div class="sidebar-link-label" id="sign-in-label">Account</div>
+        </button>
+        <button class="sidebar-link" id="settings-link">
+            <div class="sidebar-icon-container">
+                <i class="material-icons">settings</i>
+            </div>
+            <div class="sidebar-link-label" id="settings-label">Settings</div>
+        </button>
+        <button class="sidebar-link" id="about-link">
+            <div class="sidebar-icon-container">
+                <i class="material-icons">info</i>
+            </div>
+            <div class="sidebar-link-label" id="settings-label">About</div>
+        </button>
+    </div>
+    <div class="sidebar-section" id="add-calendars-section">
+        <button class="sidebar-link"  id="add-calendar-link">
+            <div class="sidebar-icon-container">
+                <i class="material-symbols-outlined">calendar_add_on</i>
+            </div>
+            <div class="sidebar-link-label" id="add-calendar-label">Add calendar</div>
+        </button>
+        <button class="sidebar-link"  id="add-calendar-group-link">
+            <div class="sidebar-icon-container">
+                <i class="material-symbols-outlined">library_add</i>
+            </div>
+            <div class="sidebar-link-label" id="add-calendar-label">Add calendar group</div>
+        </button>
+    </div>
+    <div class="sidebar-section" id="sidebar-save-vis-section" style="display: none;">
+        <form id="save-calendar-visibility-form" method="POST" action="/mycalendar">
+            <input class="sidebar-link save-button" type="submit" id="changed-calendars-vis-save-button" value="Save Changes" name="changed-calendars-vis-save-button">
+        </form>
+    </div>
+    <div class="sidebar-section" id="sidebar-user-calendars-section">
+        {% for group in calendar_groups %}
+            <div class="calendar-group">
+                <button class="sidebar-link calendar-group-link" title="{{group.calGroupName}}">
+                    <div class="sidebar-icon-container">
+                        <span class="material-icons">navigate_next</span>
+                    </div>
+                    <div class="sidebar-link-label">{{group.calGroupName}}</div>
+                    {% if group.calGroupName != "My Calendars" %}
+                        <div class="sidebar-icon-container">
+                            <span class="material-icons more-options-icon calgroup-more-options-icon" title="More options">more_horiz</span>
+                        </div>
+                    {% endif %}
+                    <div class="hidden-items calendar-group-id">{{group.calGroupId}}</div>
+                    <div class="hidden-items calendar-group-name">{{group.calGroupName}}</div>
+                </button>
+
+                <div class="calendar-group-dropdown-container">
+                    {% for calendar in calendars %}
+                        {% if calendar.calGroupId == group.calGroupId %}
+                            <button class="sidebar-link calendar-link" title="{{calendar.calName}}" draggable="true">
+                                <div class="sidebar-icon-container">
+                                    {% if calendar.calVisible == "true" %}
+                                    <input class="calendar-link-checkbox" type="checkbox" style="background-color: {{calendar.calColor}};" autocomplete="off" checked>
+                                    {% else %}
+                                    <input class="calendar-link-checkbox" type="checkbox" autocomplete="off">
+                                    {% endif %}
+                                </div>
+                                <div class="sidebar-link-label calendar-name">{{calendar.calName}}</div>
+                                <div class="sidebar-icon-container">
+                                    <span class="material-icons more-options-icon cal-more-options-icon" title="More options">more_horiz</span>
+                                </div>
+                                <div class="hidden-items calendar-id">{{calendar.calId}}</div>
+                                <div class="hidden-items calendar-group-name">{{group.calGroupName}}</div>
+                                <div class="hidden-items calendar-color">{{calendar.calColor}}</div>
+                                <div class="hidden-items calendar-visible">{{calendar.calVisible}}</div>
+                            </button>
+                        {% endif %}
+                    {% endfor %}
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+    
+    <div class="sidebar-footer">
+        <a class="sidebar-link" href="/signout" id="sign-out-link">
+            <div class="sidebar-icon-container">
+                <i class="material-icons">logout</i>
+            </div>
+            <div class="sidebar-link-label" id="sign-out-label">Sign Out</div>
+        </a>
+    </div>  
+{% endblock %}
+
+{% block create_item_header_title %}
+    <span id="new-or-create">New</span> <span id="item-type-header">Task</span> - <span id="selected-calendar-header">Calendar</span> - {{username}}
+{% endblock %}
+
+{% block select_calendar_options %}
+    {% for calendar in calendars %}
+        <option value="{{calendar.calColor}}-{{calendar.calName}}">
+            {{calendar.calName}}
+        </option>
+    {% endfor %}   
+{% endblock %}
+
+{% block content %}
+    {{ super() }}
+    <div class="modal" id="account-settings-modal">
+        <div class="modal-content" id="account-settings-modal-content">
+            <div class="modal-header" id="account-settings-modal-header">ACCOUNT SETTINGS</div>
+            <div class="modal-body" id="account-settings-modal-body">
+                <form id="account-settings-form" method="POST" action="/accountsettings">
+                    <div class="form-input-group" id="edit-profile-section">
+                        <div class="form-input-group-header" id="edit-profile-header">Edit Profile</div>
+                        <input type="text" id="edit-profile-username-input" name="edit-profile-username-input" placeholder="Username" value="{{username}}" required>
+                        <input type="email" id="edit-profile-email-input" name="edit-profile-email-input" placeholder="Email" value="{{email}}" required>
+                    </div>
+                    <div class="form-input-group" id="change-pw-section">
+                        <div class="form-input-group-header" id="change-pw-header">Change Password</div>
+                        <input type="password" id="new-pw-input" name="new-pw-input" placeholder="New Password">
+                        <input type="password" id="confirm-pw-input" name="confirm-pw-input" placeholder="Confirm Password">
+                        <div id="pw-error-message" style="display: none; color: red;">Passwords do not match.</div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer" id="account-settings-modal-footer">
+                <button class="save-btn" id="save-account-settings-btn" type="button" value="save" form="account-settings-form">Save</button>
+                <button class="cancel-btn" id="cancel-account-settings-btn" value="cancel">Cancel</button>
+                <div id="delete-btn-container">
+                    <button id="open-delete-account-modal-btn" name="open-delete-account-modal-btn">
+                        <div class="icon-container" id="account-settings-delete-icon-container">
+                            <span class="material-symbols-outlined" id="account-settings-delete-icon">delete</span>
+                        </div>
+                        <div>Delete Account</div>
+                    </button>
+                </div>
+            </div>
+        </div>
+        <div class="hidden-items" id="user-email">{{email}}</div>
+    </div>
+    <div class="modal" id="delete-account-modal">
+        <div class="modal-content delete-modal-content" id="delete-account-modal-content">
+            <div class="modal-header delete-modal-header" id="delete-account-modal-header">Delete Account</div>
+            <div class="modal-body" id="delete-account-modal-body">
+                Are you sure you want to delete your account?
+                <br><br>
+                All of your data, including your email, calendars, and calendar items will be permanently deleted.
+                <br><br>
+                This action cannot be undone.
+            </div>
+            <div class="modal-footer delete-modal-footer" id="delete-account-modal-footer">
+                <form id="delete-account-form" method="POST" action="/deleteaccount">
+                    <button class="delete-btn" id="delete-account-btn" value="delete" type="submit">Delete Account</button>
+                </form>
+                <button class="cancel-btn" id="cancel-delete-account-btn" value="cancel">Cancel</button>
+            </div>
+        </div>
+    </div>
+    <div class="modal" id="add-calendar-modal">
+        <div class="modal-content" id="add-calendar-modal-content">
+            <div class="modal-header" id="add-calendar-modal-header"> Create New Calendar </div>
+            <div class="modal-body" id="add-calendar-modal-body">
+                <form id="add-calendar-form" method="POST" action="/addcalendar">
+                    <div class="form-input-group" id="calendar-name-group">
+                        <input class="add-calendar-input" type="text" name="calendar-name" id="add-calendar-name-input" placeholder="Calendar Name" maxlength="45" required>
+                    </div>
+                    <div class="form-input-group add-calendar-input-group" id="calendar-color-group">
+                        <div class="form-group-name">Color</div>
+                        <div id="add-calendar-color-palette">
+                            <div class="circle palette-circle" id="red-palette-color" style="background-color: red;"></div>
+                            <div class="circle palette-circle" id="darkred-palette-color" style="background-color: darkred;"></div>
+                            <div class="circle palette-circle" id="pink-palette-color" style="background-color: pink;"></div>
+                            <div class="circle palette-circle" id="orange-palette-color" style="background-color: orange;"></div>
+                            <div class="circle palette-circle" id="orangered-palette-color" style="background-color: orangered;"></div>
+                            <div class="circle palette-circle" id="yellow-palette-color" style="background-color: yellow;"></div>
+                            <div class="circle palette-circle" id="gold-palette-color" style="background-color: gold;"></div>
+                            <div class="circle palette-circle" id="goldenrod-palette-color" style="background-color: goldenrod;"></div>
+                            <div class="circle palette-circle" id="green-palette-color" style="background-color: green;"></div>
+                            <div class="circle palette-circle" id="olivedrab-palette-color" style="background-color: olivedrab;"></div>
+                            <div class="circle palette-circle" id="springgreen-palette-color" style="background-color: springgreen;"></div>
+                            <div class="circle palette-circle" id="lightseagreen-palette-color" style="background-color: lightseagreen;"></div>
+                            <div class="circle palette-circle" id="blue-palette-color" style="background-color: blue;"></div>
+                            <div class="circle palette-circle" id="deepskyblue-palette-color" style="background-color: deepskyblue;"></div>
+                            <div class="circle palette-circle" id="lightsteelblue-palette-color" style="background-color: lightsteelblue;"></div>
+                            <div class="circle palette-circle" id="purple-palette-color" style="background-color: purple;"></div>
+                            <div class="circle palette-circle" id="magenta-palette-color" style="background-color: magenta;"></div>
+                            <div class="circle palette-circle" id="orchid-palette-color" style="background-color: orchid;"></div>
+                            <div class="circle palette-circle" id="brown-palette-color" style="background-color: brown;"></div>
+                            <div class="circle palette-circle" id="rosybrown-palette-color" style="background-color: rosybrown;"></div>
+                            <div class="circle palette-circle" id="gray-palette-color" style="background-color: gray;"></div>
+                            <div class="circle palette-circle" id="black-palette-color" style="background-color: black;"></div>
+                        </div>
+                        <input class="add-calendar-input" type="text" name="calendar-color" id="add-calendar-color-input" style="display: none;" value="black" required>
+                    </div>
+                    <div class="form-input-group add-calendar-input-group" id="calendar-group-group">
+                        <div class="form-group-name">Calendar Group</div>
+                        <select name="calendar-group-select" id="calendar-group-select">
+                            {% for group in calendar_groups %}
+                                <option value="{{group.calGroupId}}">
+                                    {{group.calGroupName}}
+                                </option>
+                            {% endfor %}   
+                        </select>
+                    </div>
+                    <input class="add-calendar-input" type="text" name="add-or-edit" id="add-edit-cal-indicator" style="display: none;" value="add">
+                </form>
+            </div>
+            <div class="modal-footer" id="add-calendar-modal-footer">
+                <button class="save-btn" id="save-calendar-btn" value="save" type="submit" form="add-calendar-form">Save</button>
+                <button class="cancel-btn" id="cancel-calendar-add-btn" value="cancel">Cancel</button>
+            </div>
+        </div>
+    </div>
+    <div class="modal" id="add-calendar-group-modal">
+        <div class="modal-content" id="add-calendar-group-modal-content">
+            <div class="modal-header" id="add-calendar-group-modal-header"> New Calendar Group </div>
+            <div class="modal-body" id="add-calendar-group-modal-body">
+                <form id="add-calendar-group-form" method="POST" action="/addcalendargroup">
+                    <div class="form-input-group" id="calendar-group-name-group">
+                        <input type="text" name="add-calendar-group-input" id="add-calendar-group-input" placeholder="Calendar Group Name" required>
+                    </div>
+                    <input class="add-calendar-group-input" type="text" name="add-or-edit-group" id="add-edit-calgroup-indicator" style="display: none;" value="add">
+                </form>
+            </div>
+            <div class="modal-footer" id="add-calendar-group-modal-footer">
+                <button class="save-btn" id="save-calendar-group-btn" value="save" type="submit" form="add-calendar-group-form">Save</button>
+                <button class="cancel-btn" id="cancel-calendar-group-add-btn" value="cancel">Cancel</button>
+            </div>
+        </div>
+    </div>
+    <div class="modal" id="delete-calendar-modal">
+        <div class="modal-content delete-modal-content" id="delete-calendar-modal-content">
+            <div class="modal-header delete-modal-header" id="delete-calendar-modal-header">Delete Calendar</div>
+            <div class="modal-body" id="delete-calendar-modal-body">
+                Are you sure you want to delete this calendar and all of its associated tasks, assignments, and events?
+                <br><br>
+                This action cannot be undone.
+            </div>
+            <div class="modal-footer delete-modal-footer" id="delete-calendar-modal-footer">
+                <form id="delete-calendar-form" method="POST" action="/deletecalendar">
+                    <input type="text" name="delete-calendar-input" id="delete-calendar-input" style="display: none;">
+                    <button class="delete-btn" id="delete-calendar-btn" value="delete">Delete</button>
+                </form>
+                <button class="cancel-btn" id="cancel-delete-calendar-btn" value="cancel">Cancel</button>
+            </div>
+        </div>
+    </div>
+    <form id="delete-calgroup-form" method="POST" action="/deletecalendargroup" style="display: none;">
+        <input type="text" name="delete-calgroup-input" id="delete-calgroup-input"  required>
+    </form>
+    <div class="context-menu simple-context-menu" id="calendar-group-context-menu" style="display: none;" >
+        <button class="context-menu-item simple-context-menu-item" id="calgroup-context-menu-edit-btn" value="edit">
+            <div class="context-menu-label">Edit</div>
+        </button>
+        <button class="context-menu-item simple-context-menu-item" id="calgroup-context-menu-delete-btn" value="delete">
+            <div class="context-menu-label" style="color: red;">Delete</div>
+        </button>
+    </div>
+    <div class="context-menu simple-context-menu" id="calendar-context-menu" style="display: none;">
+        <button class="context-menu-item simple-context-menu-item" id="cal-context-menu-edit-btn" value="edit">
+            <div class="context-menu-label">Edit</div>
+        </button>
+        <button class="context-menu-item simple-context-menu-item" id="cal-context-menu-delete-btn" value="delete">
+            <div class="context-menu-label" style="color: red;">Delete</div>
+        </button>
+    </div>
+    <div class="hidden-calendar-items" id="status-updated-items">
+    </div>
+    <div class="hidden-calendar-items" id="visibility-updated-calendars">
+    </div>
+{% endblock %}

@@ -1,0 +1,392 @@
+<!-- ClickGlance: A Calendar/To-Do App -->
+<!-- Author: Aishah Jones -->
+<!-- Project started: 03/15/2023 -->
+
+<!DOCTYPE html>
+<html lang="en-us">
+    <head>
+        {% block head %}
+        <meta charset="utf-8">
+        <!-- Ensures that website adjusts to display on mobile devices properly -->
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+        <title> {% block title %}ClickGlance{% endblock %} </title>
+        <!-- Stylesheet -->
+        <link rel="stylesheet" type="text/css" href= "{{url_for('static', filename='css/style.css')}}">
+        <!-- Google Fonts -->
+        <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+        <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet" />
+        <script type="text/javascript" src=" {{url_for('static', filename='script/script.js')}}" defer></script>
+        {% endblock %}
+    </head>
+    {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+            {% for category, msg in messages %}
+                <div class="alert {{category}}">
+                    {{msg}}
+                        <span class="msg-close-btn" onclick="this.parentElement.style.display='none'">
+                            &times;
+                        </span> 
+                </div>
+            {% endfor %}
+        {% endif %}
+    {% endwith %}
+    <body>
+        {% block content %}
+            
+            <header id="page-header">
+                <div id="header-label">
+                    <div id="header-dropdown">
+                        <div id="header-dropdown-label">
+                            <button id="header-text">{{month}}-{{year}}</button>
+                            <button class="material-symbols-outlined" id="header-dropdown-label-caret">expand_more</button>
+                        </div>
+                        <div class="dropdown-contents" id="header-dropdown-contents">
+                            <div id="header-dropdown-navbar">
+                                <p id="header-dropdown-navbar-year">YEAR</p>
+                                <div id="header-dropdown-navbar-icons">
+                                    <button class="dropdown-nav-arrow" id="dropdown-up-button">&uarr;</button>
+                                    <button class="dropdown-nav-arrow" id="dropdown-down-button">&darr;</button>
+                                </div>
+                            </div>
+                            <div id="header-dropdown-grid">
+                                <div id="header-dropdown-row0">
+                                    <button class="date-jump-button" id="jan-button">Jan</button>
+                                    <button class="date-jump-button" id="feb-button">Feb</button>
+                                    <button class="date-jump-button" id="mar-button">Mar</button>
+                                    <button class="date-jump-button" id="apr-button">Apr</button>
+                                </div>
+                                <div id="header-dropdown-row1">
+                                    <button class="date-jump-button" id="may-button">May</button>
+                                    <button class="date-jump-button" id="jun-button">Jun</button>
+                                    <button class="date-jump-button" id="jul-button">Jul</button>
+                                    <button class="date-jump-button" id="aug-button">Aug</button>
+                                </div>
+                                <div id="header-dropdown-row2">
+                                    <button class="date-jump-button" id="sep-button">Sep</button>
+                                    <button class="date-jump-button" id="oct-button">Oct</button>
+                                    <button class="date-jump-button" id="nov-button">Nov</button>
+                                    <button class="date-jump-button" id="dec-button">Dec</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div id="header-buttons">
+                    <form id="header-buttons-form" method="POST" action= "{% block header_buttons_form_action %} / {% endblock %}"  >
+                        {% block header_buttons_form_inputs %}
+                        {% endblock %}
+                        <input type="button" class="header-buttons" id="today-button" value="Today" name="today-btn">
+                        <input type="button" class="header-buttons month-button" id="prev-month-button" value="<" name="prev-btn">
+                        <input type="button" class="header-buttons month-button" id="next-month-button" value=">" name="next-btn">
+                        <input type="text" name="displayed-date" id="header-buttons-date">
+                    </form>
+                </div>
+            </header>
+            <div class="sidebar sidebar-collapsed" id="page-sidebar">
+                <div class="sidebar-content" id="page-sidebar-content">
+                    {% block sidebar_content %}
+                    <button class="material-icons sidebar-link" id="open-sidebar-btn">
+                        <span class="open-menu-icon"  id="menu-icon">menu</span>
+                        <span class="close-menu-icon" id="close-icon">close</span>
+                    </button>
+                    <button class="sidebar-link"  id="sign-in-link">
+                        <div class="sidebar-icon-container">
+                            <i class="material-icons">account_circle</i>
+                        </div>
+                        <div class="sidebar-link-label" id="sign-in-label">Sign In</div>
+                    </button>
+                    <button class="sidebar-link" id="about-link">
+                        <div class="sidebar-icon-container">
+                            <i class="material-icons">info</i>
+                        </div>
+                        <div class="sidebar-link-label" id="settings-label">About</div>
+                    </button>
+                    {% endblock %}
+                </div>
+            </div>
+            <div id="calendar-grid">
+                <div id="weekdays-grid-heading">
+                    <div class="weekday-label grid-cell" id="sunday">
+                        <div class="lg-view"> Sunday</div>
+                        <div class="sm-view"> Sun </div>
+                    </div>
+                    <div class="weekday-label grid-cell" id="monday">
+                        <div class="lg-view"> Monday</div>
+                        <div class="sm-view"> Mon </div>
+                    </div>
+                    <div class="weekday-label grid-cell" id="tuesday">
+                        <div class="lg-view"> Tuesday</div>
+                        <div class="sm-view"> Tue </div>
+                    </div>
+                    <div class="weekday-label grid-cell" id="wednesday">
+                        <div class="lg-view"> Wednesday</div>
+                        <div class="sm-view"> Wed </div>
+                    </div>
+                    <div class="weekday-label grid-cell" id="thursday">
+                        <div class="lg-view"> Thursday</div>
+                        <div class="sm-view"> Thurs </div>
+                    </div>
+                    <div class="weekday-label grid-cell" id="friday">
+                        <div class="lg-view"> Friday </div>
+                        <div class="sm-view"> Fri </div>
+                    </div>
+                    <div class="weekday-label grid-cell" id="saturday">
+                        <div class="lg-view"> Saturday </div>
+                        <div class="sm-view"> Sat </div>
+                    </div>
+                </div>
+                <div id="weeks-grid"></div>
+            </div>
+            <div class="modal" id="sign-inup-modal">
+                <div class="modal-content" id="sign-inup-modal-content">
+                    <div class="modal-header" id="sign-inup-modal-header">
+                        <p id="sign-inup-header-title">Foresight</p>
+                        <p id="sign-inup-header-message">Welcome back!</p>
+                    </div>
+                    <div class="modal-body" id="sign-inup-modal-body">
+                        <form class="sign-inup-form" id="sign-inup-form" method="POST" action="/signin">
+                            <div class="form-group" id="sign-inup-form-group">
+                                <input class="sign-inup-input" type="email" name="email" id="sign-inup-email-input" placeholder="Email" required>
+                                <input class="sign-inup-input" type="password" name="password" id="sign-inup-password-input" placeholder="Password" minlength="8" required>
+                                <input class="sign-inup-btn" type="submit" value="Sign In" id="sign-inup-submit-btn"> 
+                            </div>
+                        </form>
+                    </div>
+                    <div class="modal-footer" id="sign-inup-modal-footer">
+                        <p id="sign-inup-footer-message">Don't have an account?</p>
+                        <button class="sign-inup-btn redirect-btn" id="sign-inup-btn">Sign Up</button>
+                    </div>
+                </div>
+            </div>
+            <div class="modal" id="about-modal">
+                <div class="modal-content" id="about-modal-content">
+                    <div class="modal-header" id="about-modal-header">
+                        <p>About Modal Header</p>
+                    </div>
+                    <div class="modal-body" id="about-modal-body">
+
+                        Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Nunc id cursus metus aliquam. Aenean pharetra magna ac placerat. Pulvinar proin gravida hendrerit lectus. Nunc pulvinar sapien et ligula ullamcorper malesuada proin. Aliquet porttitor lacus luctus accumsan. Aliquet bibendum enim facilisis gravida neque convallis a. In fermentum posuere urna nec tincidunt praesent semper. Mattis enim ut tellus elementum sagittis. At tempor commodo ullamcorper a lacus vestibulum sed arcu. Risus feugiat in ante metus. Magna etiam tempor orci eu lobortis. Morbi tempus iaculis urna id volutpat lacus. Quis hendrerit dolor magna eget. Nunc mi ipsum faucibus vitae aliquet nec. Ut placerat orci nulla pellentesque dignissim. Viverra orci sagittis eu volutpat odio facilisis mauris sit. Imperdiet proin fermentum leo vel orci porta. Tortor posuere ac ut consequat semper viverra nam libero justo. Fermentum posuere urna nec tincidunt praesent semper.
+
+                        Tortor posuere ac ut consequat semper. Elementum tempus egestas sed sed risus pretium quam vulputate. Suspendisse ultrices gravida dictum fusce ut placerat orci. Molestie ac feugiat sed lectus vestibulum mattis ullamcorper. Pulvinar sapien et ligula ullamcorper malesuada proin libero nunc. At augue eget arcu dictum. Accumsan lacus vel facilisis volutpat. Vel pharetra vel turpis nunc eget lorem. Sit amet purus gravida quis blandit turpis cursus. Augue neque gravida in fermentum. Feugiat sed lectus vestibulum mattis ullamcorper velit. Nisl nisi scelerisque eu ultrices. Aliquam purus sit amet luctus venenatis.
+
+                        Euismod nisi porta lorem mollis aliquam ut. Aliquam sem et tortor consequat. Varius duis at consectetur lorem donec. Auctor neque vitae tempus quam pellentesque nec nam aliquam. Sed turpis tincidunt id aliquet risus feugiat in ante. Mattis aliquam faucibus purus in massa tempor nec feugiat. Tellus orci ac auctor augue mauris augue neque. Quis enim lobortis scelerisque fermentum dui faucibus. Sit amet cursus sit amet dictum sit amet. Diam donec adipiscing tristique risus nec feugiat. Sed pulvinar proin gravida hendrerit lectus a. Nunc sed augue lacus viverra vitae congue. Velit dignissim sodales ut eu sem integer. Donec adipiscing tristique risus nec. Nibh ipsum consequat nisl vel pretium lectus. Massa id neque aliquam vestibulum morbi blandit.
+
+                        In metus vulputate eu scelerisque felis imperdiet. Ultricies leo integer malesuada nunc. Dictum varius duis at consectetur. Faucibus interdum posuere lorem ipsum dolor sit amet. At lectus urna duis convallis convallis. Risus at ultrices mi tempus. Dictum at tempor commodo ullamcorper a. Elementum curabitur vitae nunc sed velit dignissim sodales ut. Fermentum dui faucibus in ornare. At risus viverra adipiscing at. Tortor id aliquet lectus proin nibh nisl condimentum. Vel turpis nunc eget lorem dolor sed viverra ipsum nunc. Ante in nibh mauris cursus mattis molestie. Orci sagittis eu volutpat odio facilisis mauris sit.
+
+                        Tincidunt vitae semper quis lectus nulla at volutpat diam ut. Iaculis nunc sed augue lacus. Duis ut diam quam nulla. Tincidunt lobortis feugiat vivamus at augue eget arcu. Magna ac placerat vestibulum lectus mauris ultrices eros. Nibh cras pulvinar mattis nunc sed. Consectetur a erat nam at lectus urna duis. Ultrices mi tempus imperdiet nulla malesuada pellentesque elit eget gravida. Ornare suspendisse sed nisi lacus sed. Amet tellus cras adipiscing enim. Ac turpis egestas maecenas pharetra convallis posuere morbi leo urna. Bibendum at varius vel pharetra vel turpis nunc. Volutpat blandit aliquam etiam erat velit scelerisque in dictum. Nisl condimentum id venenatis a condimentum vitae sapien pellentesque.
+
+                    </div>
+                    <div class="modal-footer" id="about-modal-footer">
+                        <p>About Modal Footer</p>
+                    </div>
+                </div>
+            </div>
+            <div class="modal" id="create-item-modal">
+                <div class="modal-content" id="create-item-modal-content">
+                    <div class="modal-header calendar-color" id="create-item-modal-header">
+                        <span id="create-item-header-title">
+                            {% block create_item_header_title %}
+                            <span id="new-or-create">New</span> <span id="item-type-header">Task</span> - <span id="selected-calendar-header">Example Calendar</span>
+                            {% endblock %}
+                        </span>
+                    </div>
+                    <div class="modal-body" id="create-item-modal-body">
+                        <div id="create-item-modal-topbar">
+                            <div class="create-item-icon-container">
+                                <span class="material-symbols-outlined" id="item-type-icon">task</span>
+                            </div>
+                            <div id="select-item-type-section">
+                                <input type="text" id="edit-item-type" name="edit-item-type" style="display: none;" form="create-item-form">
+                                <select class="calendar-color" name="item-type" id="item-type-select" form="create-item-form">
+                                    <option value="task">Task</option>
+                                    <option value="assignment">Assignment</option>
+                                    <option value="event">Event</option>
+                                    
+                                </select>
+                            </div>
+                            <div id="select-calendar-section">
+                                <div class="circle calendar-color" id="select-calendar-color-circle"></div>
+                                <select name="selected-calendar" id="calendar-select" form="create-item-form">
+                                    {% block select_calendar_options %}
+                                    <option value="green-Example Calendar">
+                                        Example Calendar
+                                    </option>
+                                    {% endblock %}
+                                </select>
+                            </div>
+                        </div>
+                        <form class="create-item-form" id="create-item-form" method="POST" action="/createitem">
+                            <input type="text" id="add-edit-item-indicator" name="add-edit-item-indicator" style="display: none;" value="add">
+                            <div class="form-group" id="create-item-form-group">
+                                <div class="form-input-group" id="item-title-form-group">
+                                    <div class="create-item-icon-container">
+                                        <span class="material-symbols-outlined">title</span>
+                                    </div>
+                                    <input class="create-item-input" type="text" name="item-title" id="item-title-input" placeholder="Add a title" required>
+                                </div>
+                                <div class="form-input-group" id="item-date-section">
+                                    <div class="form-input-group item-date-line" id="item-date-form-group1">
+                                        <div class="create-item-icon-container">
+                                            <span class="material-symbols-outlined">schedule</span>
+                                        </div>
+                                        <div class="date-picker-container">
+                                            <input class="create-item-input item-date-input" type="date" name="item-date1" form="create-item-form" id="create-item-date-input1">
+                                        </div>
+                                        <div class="time-picker" id="time-picker1">
+                                            <div class="time-picker-container hour-picker">
+                                                <input class="time-picker-input hour-picker-text-input" id="hour-picker-input1" name="hour-picker1" type="number" maxlength="2" max="12" value="08">
+                                                <select class="time-picker-select hour-picker-select" id="hour-picker-select1" name="hour-picker-dropdown1" form="create-item-form" >
+                                                    <option style="display: none;" selected></option>
+                                                    {% for i in range(1,13) %}
+                                                        <option value={{i}}>{{i}}</option>
+                                                    {% endfor %}
+                                                </select>
+                                            </div>
+                                            <div class="time-picker-colon" id="time-picker-colon">
+                                                :
+                                            </div>
+                                            <div class="time-picker-container minute-picker">
+                                                <input class="time-picker-input minute-picker-text-input" id="minute-picker-input1" name="minute-picker1" type="number" min="00" max="59" value="00">
+                                                <select class="time-picker-select minute-picker-select" id="minute-picker-select1" name="minute-picker-dropdown" form="create-item-form">
+                                                    <option style="display: none;" selected></option>
+                                                    {% for i in range(0,56,5) %}
+                                                        <option value={{i}}>{{i}}</option>
+                                                    {% endfor %}
+                                                </select>
+                                            </div>
+                                            <div class="time-picker-container am-pm-picker">
+                                                <select class="time-picker-select am-pm-picker-select" id="am-pm-select1" name="am-pm-picker1" form="create-item-form">
+                                                    <option value="AM">AM</option>
+                                                    <option value="PM">PM</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="form-input-group item-date-line" id="item-date-form-group2">
+                                        <div class="create-item-icon-container"></div>
+                                        <div class="date-picker-container">
+                                            <input class="create-item-input item-date-input" type="date" name="item-date2" form="create-item-form" id="create-item-date-input2">
+                                        </div>
+                                        <div class="time-picker" id="time-picker2">
+                                            <div class="time-picker-container hour-picker">
+                                                <input class="time-picker-input hour-picker-text-input" id="hour-picker-input2" name="hour-picker2" type="number" maxlength="2" max="12" value="09">
+                                                <select class="time-picker-select hour-picker-select" id="hour-picker-select2" name="hour-picker-dropdown2" form="create-item-form">
+                                                    <option style="display: none;" selected></option>
+                                                    {% for i in range(1,13) %}
+                                                        <option value={{i}}>{{i}}</option>
+                                                    {% endfor %}
+                                                </select>
+                                            </div>
+                                            <div class="time-picker-colon">
+                                                :
+                                            </div>
+                                            <div class="time-picker-container minute-picker">
+                                                <input class="time-picker-input minute-picker-text-input" id="minute-picker-input2" name="minute-picker2" type="number" min="00" max="59" value="00">
+                                                <select class="time-picker-select minute-picker-select" id="minute-picker-select2" name="minute-picker-dropdown" form="create-item-form">
+                                                    <option style="display: none;" selected></option>
+                                                    {% for i in range(0,56,5) %}
+                                                        <option value={{i}}>{{i}}</option>
+                                                    {% endfor %}
+                                                </select>
+                                            </div>
+                                            <div class="time-picker-container am-pm-picker">
+                                                <select class="time-picker-select am-pm-picker-select" id="am-pm-select2" name="am-pm-picker2" form="create-item-form">
+                                                    <option value="AM">AM</option>
+                                                    <option value="PM">PM</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-input-group" id="item-notes-form-group">
+                                    <div class="create-item-icon-container">
+                                        <span class="material-symbols-outlined">description</span>
+                                    </div>
+                                    <textarea class="create-item-input" id="item-notes-input" name="item-notes" placeholder="Add notes" form="create-item-form"></textarea>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="modal-footer" id="create-item-modal-footer">
+                        <button class="create-task-btn calendar-color" type="submit" form="create-item-form" value="Save" id="create-item-save-btn"> 
+                            <div class="icon-container">
+                                <span class="material-symbols-outlined">save</span>
+                            </div>
+                            <p>Save</p>
+                        </button>
+                    </div>
+                </div>
+            </div>
+            <div class="modal" id="delete-item-modal">
+                <div class="modal-content delete-modal-content" id="delete-item-modal-content">
+                    <div class="modal-header delete-modal-header" id="delete-item-modal-header">Delete Item </div>
+                    <div class="modal-body" id="delete-item-modal-body">Are you sure you want to delete this item?</div>
+                    <div class="modal-footer delete-modal-footer" id="delete-item-modal-footer">
+                        <form id="delete-item-form" method="POST" action="/deleteitem">
+                            <input type="text" name="delete-item-input" id="delete-item-input" style="display: none;">
+                            <button class="delete-btn" id="delete-item-btn" value="delete">Delete</button>
+                        </form>
+                        <button class="cancel-btn" id="cancel-delete-btn" value="cancel">Cancel</button>
+                    </div>
+                </div>
+            </div>
+            <div class="context-menu" id="item-context-menu" style="display: none;">
+                <button class="context-menu-item" id="context-menu-edit-btn" value="edit">
+                    <div class="context-menu-icon-container">
+                        <span class="material-symbols-outlined">edit</span>
+                    </div>
+                    <div class="context-menu-label">Edit</div>
+                </button>
+                <button class="context-menu-item" id="context-menu-duplicate-btn" value="duplicate">
+                    <div class="context-menu-icon-container">
+                        <span class="material-symbols-outlined">content_copy</span>
+                    </div>
+                    <div class="context-menu-label">Duplicate</div>
+                </button>
+                <button class="context-menu-item" id="context-menu-delete-btn" value="delete">
+                    <div class="context-menu-icon-container">
+                        <span class="material-symbols-outlined" style="color: red;">delete</span>
+                    </div>
+                    <div class="context-menu-label" style="color: red;">Delete</div>
+                </button>
+            </div>
+            <div class="hidden-calendar-items date-item" id="hidden-calendar-items">
+                {% for task in tasks %}
+                <div class="task {{task.taskDueDate}}">
+                    <p class="item-id">{{task.taskId}}</p>
+                    <p class="item-cal-id">{{task.calId}}</p>
+                    <p class="item-title">{{task.taskTitle}}</p>
+                    <p class="item-due-date">{{task.taskDueDate}}</p>
+                    <p class="item-notes">{{task.taskNotes}}</p>
+                    <p class="item-status">{{task.taskStatus}}</p> 
+                </div>
+                {% endfor %}
+                {% for a in assignments %}
+                <div class="assignment {{a.assignmentDueDate}}">
+                    <p class="item-id">{{a.assignmentId}}</p>
+                    <p class="item-cal-id">{{a.calId}}</p>
+                    <p class="item-title">{{a.assignmentTitle}}</p>
+                    <p class="item-due-date">{{a.assignmentDueDate}}</p>
+                    <p class="item-due-time">{{a.assignmentDueTime}}</p>
+                    <p class="item-notes">{{a.assignmentNotes}}</p>
+                    <p class="item-status">{{a.assignmentStatus}}</p>
+                </div>
+                {% endfor %}
+                {% for e in events %}
+                <div class="event {{e.eventStartDate}}">
+                    <p class="item-id">{{e.eventId}}</p>
+                    <p class="item-cal-id">{{e.calId}}</p>
+                    <p class="item-title">{{e.eventTitle}}</p>
+                    <p class="item-due-date">{{e.eventStartDate}}</p>
+                    <p class="item-due-time">{{e.eventStartTime}}</p>
+                    <p class="item-end-date">{{e.eventEndDate}}</p>
+                    <p class="item-end-time">{{e.eventEndTime}}</p>
+                    <p class="item-status">{{e.eventStatus}}</p>
+                    <p class="item-notes">{{e.eventNotes}}</p>
+                </div>
+                {% endfor %}
+            </div>
+        {% endblock %}
+    </body>
+</html>
