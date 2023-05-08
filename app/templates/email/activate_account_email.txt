@@ -1,0 +1,9 @@
+Hello {{ user.username }},
+
+Welcome to ClickGlance!
+
+Please click on the link below to finish setting up your account:
+
+{{ url_for('activateAccount', token=token, _external=True) }}
+
+If you did not submit this request, please ignore this email.

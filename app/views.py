@@ -1,4 +1,5 @@
 from app import cg_app, db
+from app.email import send_password_reset_email, send_activate_account_email, send_delete_account_email
 from datetime import datetime
 from flask import render_template, redirect, url_for, request, session, flash
 from flask_bcrypt import Bcrypt
@@ -49,12 +50,52 @@ def myCalendar():
         # if logged in, show user's calendar page
         if "email" in session:
             found_user = Users.query.filter_by(email=session["email"]).first()
-            current_month = datetime.now().month
-            current_year = datetime.now().year
-            return loadCalendar(found_user, current_month, current_year)
+            if found_user.isactivated == "true":
+                current_month = datetime.now().month
+                current_year = datetime.now().year
+                return loadCalendar(found_user, current_month, current_year)
+            else:
+                return redirect(url_for("inactiveAccount"))
         else:
             flash("Please sign in or create an account to access My Calendar.", "error")
             return redirect(url_for("index"))
+
+@cg_app.route("/inactiveaccount", methods=['GET', 'POST'])
+def inactiveAccount():
+    if "email" in session:
+        found_user = Users.query.filter_by(email=session["email"]).first()
+        if found_user.isactivated == "true":
+            return redirect(url_for("myCalendar"))
+        else:
+            if request.method == 'GET':
+                return render_template("inactiveaccount.html", email = found_user.email, username=found_user.username)
+            # submitted "resend activation link" form
+            else:
+                send_activate_account_email(found_user)
+                flash("Verification email successfully resent!", "info")
+                return render_template("inactiveaccount.html", email = found_user.email, username=found_user.username)
+    else:
+        return redirect(url_for("index"))
+    
+
+@cg_app.route("/activateaccount/<token>", methods=['GET'])
+def activateAccount(token):
+    if "email" in session:
+        found_user = Users.query.filter_by(email=session["email"]).first()
+        if found_user.isactivated == "true":
+            return redirect(url_for("myCalendar"))
+        else:
+            # if user has requested multiple activation links, ensures that only the most recent can be used
+            if token==found_user.activate_token and Users.verify_token(token, token_type="activate_account"):
+                found_user.isactivated = "true"
+                db.session.commit()
+                flash(f"Welcome to ClickGlance, {found_user.username}!", "info")
+                return redirect(url_for("myCalendar"))
+            else:
+                flash("Invalid or expired activation link", "error")
+                return redirect(url_for("inactiveAccount"))
+    else:
+        return redirect(url_for("index"))
 
 @cg_app.route("/register", methods=['GET', 'POST'])
 def register():
@@ -73,7 +114,7 @@ def register():
         else:
             # Create new user
             hashed_pw = bcrypt.generate_password_hash(password).decode('utf-8') # decode so the hashed pw is a string, not bytes
-            new_user = Users(username, email, hashed_pw)
+            new_user = Users(username, email, hashed_pw, "false")
             db.session.add(new_user)
             db.session.commit()
 
@@ -93,9 +134,9 @@ def register():
             
             # add user to current session
             session["email"] = email
-            # redirect to calendar page for new user
-            flash("Your account has been successfully created!", "info")
-            return redirect(url_for("myCalendar"))
+            # send "verify account" email
+            send_activate_account_email(new_user)
+            return redirect(url_for("inactiveAccount"))
     # GET method
     else:
         # if already logged in, take to user's calendar - else, to home page
@@ -106,6 +147,7 @@ def register():
 
 @cg_app.route("/signin", methods=['GET','POST'])
 def signIn():
+    
     if request.method == 'POST':
         # Sign-In form fields
         email = request.form.get("email")
@@ -115,8 +157,11 @@ def signIn():
 
         if found_user and bcrypt.check_password_hash(found_user.password, form_password):
             session["email"] = email
-            flash(f"Welcome back, {found_user.username}!", "info")
-            return redirect(url_for("myCalendar"))
+            if found_user.isactivated:
+                flash(f"Welcome back, {found_user.username}!", "info")
+                return redirect(url_for("myCalendar"))
+            else:
+                return redirect(url_for("inactiveAccount"))
         else:
             flash("Sign-in failed: Invalid email or password", "error")
             return redirect(url_for("index"))
@@ -128,6 +173,54 @@ def signIn():
             return redirect(url_for("myCalendar"))
         else:
             return redirect(url_for("index"))
+
+@cg_app.route("/forgotpassword", methods=['GET', 'POST'])
+def forgotPassword():
+    if "email" in session:
+        return redirect(url_for("index"))
+    else:
+        # clicked "Forgot password?" link in sign-in modal
+        if request.method == 'GET':
+            return render_template("forgotpassword.html", landing="true")
+        # submitted "Send Reset Link" form from Forgot Password landing page
+        else:
+            recovery_email = request.form.get("forgot-pw-email-input")
+            recovered_user = Users.query.filter_by(email=recovery_email).first()
+            user_exists = None
+
+            # if a user exists with that email
+            if recovered_user:
+                user_exists = "true"
+                send_password_reset_email(recovered_user)
+            # if no user exists with that email
+            else:
+                user_exists = "false"
+            return render_template("forgotpassword.html", landing="false", user_exists=user_exists, email=recovery_email)
+
+@cg_app.route("/resetpassword/<token>", methods=['GET', 'POST'])
+def resetPassword(token):
+    if "email" in session:
+        return redirect(url_for("index"))
+    else:
+        # clicked link in email, show "reset password" form
+        if request.method == 'GET':
+            user = Users.verify_token(token)
+            if user:
+                return render_template("resetpassword.html", token=token, user_id = user.userId)
+            # invalid token
+            else:
+                flash("Invalid link", "error")
+                return redirect(url_for("index"))
+        # submitted "reset password" form
+        else:
+            user = Users.query.filter_by(userId=request.form.get("userId")).first()
+            new_password = request.form.get("confirmpw-input")
+            user.password = bcrypt.generate_password_hash(new_password).decode('utf-8')
+            db.session.commit()
+
+            session["email"] = user.email
+            flash("Password successfully updated!", "info")
+            return redirect(url_for("myCalendar"))
 
 @cg_app.route("/createitem", methods=['GET', 'POST'])
 def createItem():
@@ -407,6 +500,9 @@ def accountSettings():
 def deleteAccount():
     if request.method == 'POST':
         user = Users.query.filter_by(email=session["email"]).first()
+        # send account deleted notification email
+        send_delete_account_email(user.email, user.username)
+
         userId = user.userId
         userTasks = Tasks.query.filter_by(userId=userId).all()
         userAssignments = Assignments.query.filter_by(userId=userId).all()
@@ -418,6 +514,7 @@ def deleteAccount():
             db.session.delete(userData)
             db.session.commit()
 
+        
         db.session.delete(user)
         db.session.commit()
         session.clear()
@@ -433,7 +530,9 @@ def signout():
     flash("You have been successfully logged out.", "info")
     return redirect(url_for("index"))
 
+
 # ----------------------------------- HELPER FUNCTIONS ----------------------------------- #
+
 
 # commits item status changes to the database
 # form input names for changed items: itemId-itemType, form input values: item status

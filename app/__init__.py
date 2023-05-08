@@ -1,5 +1,6 @@
 from flask import Flask
 from config import Config
+from flask_mail import Mail
 from flask_sqlalchemy import SQLAlchemy
 
 # create the app
@@ -10,6 +11,8 @@ cg_app.config.from_object(Config)
 db = SQLAlchemy()
 # initialize the app with the extension
 db.init_app(cg_app)
+
+mail = Mail(cg_app)
 
 from app import views, models
 

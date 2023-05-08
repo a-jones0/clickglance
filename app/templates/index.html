@@ -33,7 +33,7 @@
     {% endwith %}
     <body>
         {% block content %}
-            
+
             <header id="page-header">
                 <div id="header-label">
                     <div id="header-dropdown">
@@ -141,14 +141,15 @@
             <div class="modal" id="sign-inup-modal">
                 <div class="modal-content" id="sign-inup-modal-content">
                     <div class="modal-header" id="sign-inup-modal-header">
-                        <p id="sign-inup-header-title">Foresight</p>
+                        <p id="sign-inup-header-title">ClickGlance</p>
                         <p id="sign-inup-header-message">Welcome back!</p>
                     </div>
                     <div class="modal-body" id="sign-inup-modal-body">
                         <form class="sign-inup-form" id="sign-inup-form" method="POST" action="/signin">
                             <div class="form-group" id="sign-inup-form-group">
                                 <input class="sign-inup-input" type="email" name="email" id="sign-inup-email-input" placeholder="Email" required>
-                                <input class="sign-inup-input" type="password" name="password" id="sign-inup-password-input" placeholder="Password" minlength="8" required>
+                                <input class="sign-inup-input" type="password" name="password" id="sign-inup-password-input" placeholder="Password" required>
+                                <a id="forgot-pw-link" href="{{ url_for('forgotPassword') }}" style="text-decoration: none;">Forgot password?</a>
                                 <input class="sign-inup-btn" type="submit" value="Sign In" id="sign-inup-submit-btn"> 
                             </div>
                         </form>

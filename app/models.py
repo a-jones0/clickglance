@@ -1,18 +1,40 @@
-from app import db
+from app import db, cg_app
+from time import time
+import jwt
 
 class Users(db.Model):
     userId = db.Column(db.Integer, primary_key=True)
     username = db.Column(db.String, nullable=False)
     email = db.Column(db.String, unique=True, nullable=False)
     password = db.Column(db.String, nullable=False)
+    isactivated = db.Column(db.String, nullable=False)
+    activate_token = db.Column(db.String)
+    pwreset_token = db.Column(db.String)
 
-    def __init__(self, username, email, password):
+    def __init__(self, username, email, password, isactivated, activate_token=None, pwreset_token=None):
         self.username = username
         self.email = email
         self.password = password
+        self.isactivated = isactivated
+        self.activate_token = activate_token
+        self.pwreset_token = pwreset_token
     
     def __str__(self):
         return "username: "+ self.username + " email: " + self.email + " password: " + self.password
+    
+    # token_type (str): "reset_password" or "activate_account"
+    def get_token(self, token_type="reset_password", expires_in=1800):
+        return jwt.encode({token_type: self.userId, 'exp': time() + expires_in}, cg_app.config['SECRET_KEY'], algorithm='HS256')
+    
+    # if the reset password token is valid, returns the user associated with said token
+    # token_type (str): "reset_password" or "activate_account"
+    @staticmethod
+    def verify_token(token, token_type="reset_password"):
+        try:
+            user_id = jwt.decode(token, cg_app.config['SECRET_KEY'], algorithms=['HS256'])[token_type]
+            return Users.query.filter_by(userId=user_id).first()
+        except:
+            return None
 
 class Calendar_Groups(db.Model):
     __tablename__ = 'calendar_groups'

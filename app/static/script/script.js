@@ -779,6 +779,8 @@ function init(){
         document.getElementById("sign-inup-header-message").innerHTML = "Welcome back!";
         // remove "Username" input field
         signInUpFormGroup.removeChild(document.getElementById("sign-inup-username-input"));
+        // show "Forgot password?" link
+        document.getElementById("forgot-pw-link").style.display = "block";
         // change form submit button value
         document.getElementById("sign-inup-submit-btn").value = "Sign In";
         //change form action
@@ -795,6 +797,8 @@ function init(){
         document.getElementById("sign-inup-header-message").innerHTML = "Nice to meet you!";
         // add "Username" input field to form
         signInUpFormGroup.prepend(usernameInput)
+        // hide "Forgot password?" link
+        document.getElementById("forgot-pw-link").style.display = "none";
         // change form submit button value
         document.getElementById("sign-inup-submit-btn").value = "Create Account";
         //change form action

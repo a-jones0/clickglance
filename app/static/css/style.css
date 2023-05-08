@@ -697,6 +697,37 @@ body.modal-show {
     background-color: white;
 }
 
+/* RESET PASSWORD FORM*/
+#reset-pw-input-group input {
+    border-bottom: 2px solid gray;
+}
+
+#resetpw-input {
+    margin-bottom: 15px;
+}
+
+#confirmpw-input {
+    margin-bottom: 0px;
+}
+
+#reset-pw-btn {
+    font: inherit;
+    padding: 8px 15px;
+    background: lightblue;
+    border: none;
+    border-radius: 5px;
+}
+
+#reset-pw-btn:hover {
+    cursor: pointer;
+}
+
+#resetpw-error-message {
+    display: none;
+    color: red;
+    margin-top: 8px;
+}
+
 /* CREATE ITEM MODAL */
 
 .calendar-color {
@@ -1089,6 +1120,12 @@ input.sign-inup-input:focus {
     flex-direction: column;
 }
 
+#forgot-pw-link {
+    text-decoration: none;
+    align-self: flex-end;
+    font-size: 14px;
+}
+
 /* FLASK FLASH MESSAGES */
 .alert {
     position: fixed;
@@ -1232,6 +1269,67 @@ input.sign-inup-input:focus {
     padding: 5px 15px 5px 5px;
 }
 
+/* FORGOT PASSWORD PAGE */
+.pw-reset-window{
+    width: 450px;
+    height: 300px;
+    background: rgb(247, 253, 255);
+    border-radius: 5px;
+    margin: 10% auto;
+    padding: 10px 20px;
+    box-shadow: 5px 5px 10px 1px darkgray, -1px -1px 5px 1px darkgray; /*h-offset, v-offset, blur, spread, color*/
+}
+
+.pw-reset-header {
+    font-size: larger;
+}
+
+#forgot-pw-form {
+    display: flex;
+    flex-direction: column;
+    margin: 10px auto;
+}
+
+#forgot-pw-email-input {
+    border: none;
+    height: 30px;
+    background:none;
+    border-bottom: 2px solid gray;
+    margin-bottom: 15px;
+    font-size: 17px;
+    font-family: inherit;
+}
+
+#send-reset-link-btn {
+    background-color: lightblue;
+    border: none;
+    border-radius: 5px;
+    padding: 5px 0px;
+    font: inherit;
+    margin-bottom: 5px;
+}
+
+#send-reset-link-btn:hover {
+    cursor: pointer;
+    background-color: lightskyblue;
+}
+
+/* INACTIVE ACCOUNT PAGE */
+#inactive-account-window{
+    height: 236px;
+}
+
+.resend-link{
+    font-family: sans-serif;
+    color: blue;
+    background: none;
+    border: none;
+    text-decoration: underline;
+}
+
+.resend-link:hover{
+    cursor: pointer;
+}
 
 /* Chrome, Safari, Edge, Opera */
 input::-webkit-outer-spin-button,

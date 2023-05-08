@@ -1,0 +1,9 @@
+Hello {{ username }},
+
+Your ClickGlance account has been deleted.
+
+Thanks so much for giving ClickGlance a try!
+
+Kind Regards,
+Aishah Jones
+Creator of ClickGlance
