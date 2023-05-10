@@ -11,6 +11,8 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
     
         <title> {% block title %}ClickGlance{% endblock %} </title>
+        <!-- Favicon -->
+        <link rel="shortcut icon" type="image/x-icon" href="{{ url_for('static', filename='favicon.ico') }}">
         <!-- Stylesheet -->
         <link rel="stylesheet" type="text/css" href= "{{url_for('static', filename='css/style.css')}}">
         <!-- Google Fonts -->
@@ -224,7 +226,7 @@
                                     <div class="create-item-icon-container">
                                         <span class="material-symbols-outlined">title</span>
                                     </div>
-                                    <input class="create-item-input" type="text" name="item-title" id="item-title-input" placeholder="Add a title" required>
+                                    <input class="create-item-input" type="text" name="item-title" id="item-title-input" placeholder="Add a title" maxlength="100" required>
                                 </div>
                                 <div class="form-input-group" id="item-date-section">
                                     <div class="form-input-group item-date-line" id="item-date-form-group1">

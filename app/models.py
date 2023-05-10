@@ -10,12 +10,16 @@ class Users(db.Model):
     isactivated = db.Column(db.String, nullable=False)
     activate_token = db.Column(db.String)
     pwreset_token = db.Column(db.String)
+    color_theme = db.Column(db.String, nullable=False)
+    font_size = db.Column(db.String, nullable=False)
 
-    def __init__(self, username, email, password, isactivated, activate_token=None, pwreset_token=None):
+    def __init__(self, username, email, password, isactivated, color_theme, font_size, activate_token=None, pwreset_token=None):
         self.username = username
         self.email = email
         self.password = password
         self.isactivated = isactivated
+        self.color_theme = color_theme
+        self.font_size = font_size
         self.activate_token = activate_token
         self.pwreset_token = pwreset_token
     

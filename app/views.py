@@ -114,7 +114,7 @@ def register():
         else:
             # Create new user
             hashed_pw = bcrypt.generate_password_hash(password).decode('utf-8') # decode so the hashed pw is a string, not bytes
-            new_user = Users(username, email, hashed_pw, "false")
+            new_user = Users(username, email, hashed_pw, "false", "Light", "14px")
             db.session.add(new_user)
             db.session.commit()
 
@@ -559,6 +559,7 @@ def saveCalendarChanges(request, calVisibility=False):
                     modifiedEvent.eventStatus = itemStatus
         db.session.commit()
 
+
 # performs necessary queries and then renders either the index or myCalendar page depending on if a user is signed in
 # Inputs: User object, str: month (1-12), str: year
 def loadCalendar(user, month=datetime.now().month, year=datetime.now().year, demo_calendar=False):
@@ -576,7 +577,7 @@ def loadCalendar(user, month=datetime.now().month, year=datetime.now().year, dem
                                               assignments=[a for a in session["items"] if a["itemType"]=="assignment"], 
                                               events=[event for event in session["items"] if event["itemType"]=="event"], month=month, year=year)
         else:
-            return render_template("index.html",  tasks=[], assignments=[], events=[], month=month, year=year)
+            return render_template("index.html",  tasks=[], assignments=[], events=[], month=month, year=year, user_color_theme="Light", user_font_size = "14px")
     else:
         user_calendar_groups = Calendar_Groups.query.filter_by(userId=user.userId).order_by(Calendar_Groups.calGroupId).all()
         user_calendars = Calendars.query.filter_by(userId=user.userId).order_by(Calendars.calGroupId).all()
@@ -598,8 +599,10 @@ def loadCalendar(user, month=datetime.now().month, year=datetime.now().year, dem
         next_assignments = Assignments.query.filter_by(userId=user.userId).filter(extract("year",Assignments.assignmentDueDate)==next_year).filter(extract("month",Assignments.assignmentDueDate)==next_month).order_by(Assignments.assignmentDueTime).all()
         next_events = Events.query.filter_by(userId=user.userId).filter(extract("year",Events.eventStartDate)==next_year).filter(extract("month",Events.eventStartDate)==next_month).order_by(Events.eventStartTime).all()
 
-        return render_template("mycalendar.html", username=user.username, email=user.email, calendar_groups=user_calendar_groups, calendars=user_calendars, 
-        tasks=prev_tasks+tasks+next_tasks, assignments=prev_assignments+assignments+next_assignments, events=prev_events+events+next_events, month=month, year=year)
+        # color theme names
+        color_themes = ["Light", "Dark", "Navy Luxe", "Click Classic"]
+        return render_template("mycalendar.html", username=user.username, email=user.email, user_color_theme=user.color_theme, user_font_size=user.font_size, calendar_groups=user_calendar_groups, calendars=user_calendars, 
+        tasks=prev_tasks+tasks+next_tasks, assignments=prev_assignments+assignments+next_assignments, events=prev_events+events+next_events, month=month, year=year, color_themes=color_themes)
 
 """
 MySQL time format: HH:MM:SS, "Create Item" form time format: 12-hour AM/PM

@@ -28,6 +28,97 @@ function init(){
     let displayedYear = displayedDate.getFullYear();
     let jumpDateDropdownYear = displayedDate.getFullYear();
 
+
+    /* ~ ~ ~ ~ ~ ~ ~ ~ COLOR THEMES ~ ~ ~ ~ ~ ~ ~ ~ */
+
+    const light = {"--background-color":        "white", 
+    "--header-label-color":            "black", 
+    "--weekday-label-color":           "black", 
+    "--label-button-hover-color":      "lightgray",
+    "--calendar-grid-color":           "black",
+    "--date-color":                    "black",
+    "--today-accent-color":            "#0B5394",
+    "--highlighted-day-color":         "rgba(162,210,255,0.5)",
+    "--datejump-font-color":           "black",
+    "--datejump-background-color":     "white",
+    "--datejump-hover-color":          "lightgray",
+    "--item-font-color":               "black",
+    "--context-menu-background":       "white",
+    "--context-menu-font-color":       "black",
+    "--context-menu-hover-color":      "lightgray",
+    "--side-navbar-background-color":  "rgb(162, 210, 255)",
+    "--side-navbar-link-color":        "black",
+    "--side-navbar-link-hover-color":  "rgb(192, 230, 255)",
+    "--modal-background-color":        "#FDF6EC",
+    "--more-options-hover-color":      "rgb(196, 194, 194)"};
+
+    const dark = {"--background-color":         "#121212", 
+    "--header-label-color":            "#9ea6ae", 
+    "--weekday-label-color":           "#9ea6ae", 
+    "--label-button-hover-color":      "#262626",
+    "--calendar-grid-color":           "#9ea6ae",
+    "--date-color":                    "#9ea6ae",
+    "--today-accent-color":            "#cccbcb",
+    "--highlighted-day-color":         "#313131",
+    "--datejump-font-color":           "#b5c1cc",
+    "--datejump-background-color":     "#313131",
+    "--datejump-hover-color":          "#454545",
+    "--item-font-color":               "#cfd2d5",
+    "--context-menu-background":       "#5f5f5f",
+    "--context-menu-font-color":       "#d3d7dc",
+    "--context-menu-hover-color":      "#262626",
+    "--side-navbar-background-color":  "#454545",
+    "--side-navbar-link-color":        "#cfd2d5",
+    "--side-navbar-link-hover-color":  "#262626",
+    "--modal-background-color":        "#FDF6EC",
+    "--more-options-hover-color":      "#454545"};
+
+    const navyLuxe = {"--background-color":       "#031a2f", 
+    "--header-label-color":            "#b5b097", 
+    "--weekday-label-color":           "#b5b097", 
+    "--label-button-hover-color":      "#11324f",
+    "--calendar-grid-color":           "#b5b097",
+    "--date-color":                    "#b5b097",
+    "--today-accent-color":            "#bfa410",
+    "--highlighted-day-color":         "#0d2f4f",
+    "--datejump-font-color":           "#b5b097",
+    "--datejump-background-color":     "#30363c",
+    "--datejump-hover-color":          "#282723",
+    "--item-font-color":               "#d5cca8",
+    "--context-menu-background":       "#dbd4b0",
+    "--context-menu-font-color":       "black",
+    "--context-menu-hover-color":      "#827e69",
+    "--side-navbar-background-color":  "#333a40",
+    "--side-navbar-link-color":        "#d5d0ba",
+    "--side-navbar-link-hover-color":  "#282723",
+    "--modal-background-color":        "#FDF6EC",
+    "--more-options-hover-color":      "#333a40"};
+
+    const clickClassic = {"--background-color": "beige",
+    "--header-label-color": "black",
+    "--weekday-label-color": "black",
+    "--label-button-hover-color": "lightgray",
+    "--calendar-grid-color": "black",
+    "--date-color": "black",
+    "--today-accent-color": "purple",
+    "--highlighted-day-color": "#b8e8ff",
+    "--datejump-font-color": "black",
+    "--datejump-background-color": "whitesmoke",
+    "--datejump-hover-color": "lightgray",
+    "--side-navbar-background-color": "lightblue",
+    "--side-navbar-link-color": "black",
+    "--side-navbar-link-hover-color": "lightgray",
+    "--modal-background-color": "#FDF6EC",
+    "--item-font-color": "black",
+    "--context-menu-background": "rgb(255, 253, 226)",
+    "--context-menu-font-color": "black",
+    "--context-menu-hover-color": "lightgray",
+    "--more-options-hover-color": "rgb(196, 194, 194)"};
+
+    const colorThemes = {"Light":light, "Dark": dark, "Navy Luxe": navyLuxe, "Click Classic": clickClassic};
+
+
+
     /*
         This function sets up the initial calendar grid HTML and fills in the dates for the current month/year.
 
@@ -80,10 +171,8 @@ function init(){
                         !event.target.classList.contains("item-time-container") && 
                         !event.target.classList.contains("item-title-container")){
                             showCreateItemModal(this);
-                            console.log("double clicked!");
                         }
                         else{
-                            console.log("highlight!");
                             highlightDate(this);
                         }
                     }
@@ -182,7 +271,26 @@ function init(){
             }
         }
     }
+    // sets the page's color theme by changing the appropriate CSS variables
+    // Inputs: themeName(str): the name of the theme
+    // Outputs: None 
+    function setColorTheme(themeName){
+        selectedTheme = colorThemes[themeName]; //JS Object where key:value is cssVarName: cssVarValue
+        Object.keys(selectedTheme).forEach(function(key) {
+            // key: name of the css var to be modified for the color theme
+            root.style.setProperty(key, selectedTheme[key]);
+        });
+    }
 
+    function setItemFontSize(fontSize){
+        root.style.setProperty("--item-font-size", fontSize);
+    };
+
+    const userColorTheme = document.getElementById("color-theme-select").value;
+    const userFontSize = document.getElementById("item-fontsize-select").value; 
+
+    setColorTheme(userColorTheme);
+    setItemFontSize(userFontSize);
 
     /* ------------------------------- USER CALENDARS - SIDEBAR LINK AND TASK RENDERING SETUP ------------------------------- */
 
@@ -244,6 +352,12 @@ function init(){
             else {
                 let calendarContextMenu = document.getElementById("calendar-context-menu");
                 //open the context menu
+                if(calendarLink.querySelector(".calendar-name").innerHTML == "Calendar"){
+                    calendarContextMenu.querySelector("#cal-context-menu-delete-btn").style.display = "none";
+                }
+                else {
+                    calendarContextMenu.querySelector("#cal-context-menu-delete-btn").style.display = "flex";
+                }
                 calendarContextMenu.style.display = "flex";
                 calendarContextMenu.style.left = event.pageX + "px";
                 calendarContextMenu.style.top = event.clientY+ "px";
@@ -255,18 +369,18 @@ function init(){
         });
 
         // can't edit or delete the starter calendar
-        if(calendarLink.querySelector(".calendar-name").innerHTML != "Calendar"){
-            // show more options icon when hovering over the calendar link
-            let moreOptionsIcon = calendarLink.querySelector(".more-options-icon");
-            calendarLink.onmouseenter = function(){
-                moreOptionsIcon.style.display = "block";
-            };
-            calendarLink.onmouseleave = function(){
-                moreOptionsIcon.style.display = "none";
-            };
-            moreOptionsIcon.onclick = function(){
-            }
+        //if(calendarLink.querySelector(".calendar-name").innerHTML != "Calendar"){
+        // show more options icon when hovering over the calendar link
+        let moreOptionsIcon = calendarLink.querySelector(".more-options-icon");
+        calendarLink.onmouseenter = function(){
+            moreOptionsIcon.style.display = "block";
+        };
+        calendarLink.onmouseleave = function(){
+            moreOptionsIcon.style.display = "none";
+        };
+        moreOptionsIcon.onclick = function(){
         }
+        //}
 
         
     }
@@ -566,7 +680,8 @@ function init(){
 
     // style items to be faded with strikethrough text if cancelled, normal styling otherwise
     function itemStatusStyle(calendarItem, itemStatus){
-        calendarItem.style.color = "black";
+        calendarItem.style.color = getComputedStyle(root).getPropertyValue("--item-font-color");
+        console.log("font color?: ", getComputedStyle(root).getPropertyValue("--item-font-color"));
         if(itemStatus == "canceled" || itemStatus == "complete"){
             calendarItem.style.opacity = 0.5;
             if(itemStatus == "canceled"){
@@ -582,7 +697,6 @@ function init(){
         }
         else {
             let itemCalId = calendarItem.querySelector(".item-cal-id").innerHTML;
-            console.log("item cal id: ", itemCalId);
             let itemColor = userCalendars[itemCalId]["color"]
             calendarItem.style.opacity = 1;
             calendarItem.style.backgroundColor = getComputedStyle(root).getPropertyValue('--'+itemColor); // the color's custom rgba value as defined in the CSS stylesheet
@@ -655,25 +769,6 @@ function init(){
         });
     }
 
-    /*
-    // Add functionality to the "Today" button in the header toolbar
-    todayButton.addEventListener("click", function(){
-        fillDates();
-    });
-    
-    // Add functionality to the prev-month button in the header toolbar
-    prevMonthButton.addEventListener("click", function(){
-        let newDisplayedMonth = displayedMonth == 0 ? 11 : displayedMonth - 1;
-        let newDisplayedYear = displayedMonth == 0 ? displayedYear-1 : displayedYear;
-        fillDates(newDisplayedYear, newDisplayedMonth);
-    });
-    // Add functionality to the next-month button in the header toolbar
-    nextMonthButton.addEventListener("click", function(){
-        let newDisplayedMonth = displayedMonth == 11 ? 0 : displayedMonth + 1;
-        let newDisplayedYear = displayedMonth == 11 ? displayedYear+1 : displayedYear;
-        fillDates(newDisplayedYear, newDisplayedMonth);
-    });
-    */
     // Add functionality to the date-jump dropdown menu in the header
     headerDropdownLabel.addEventListener("click", function(){
         headerDropdownContents.classList.toggle("dropdown-contents-show");
@@ -683,7 +778,9 @@ function init(){
     for(const jumpButton of dateJumpButtons) {
         jumpButton.addEventListener("click", function(){
             headerDropdownContents.classList.toggle("dropdown-contents-show");
-            fillDates(jumpDateDropdownYear, dateJumpButtonIds[this.id]);
+            // input: the date being toggled to by clicking on the date-jump button - format: YYYY-MM
+            document.getElementById("header-buttons-date").value = jumpDateDropdownYear +"-"+dateJumpButtonIds[this.id]; 
+            document.getElementById("header-buttons-form").submit()
         });
     }
     // Add functionality to the "up arrow" nav button in the date-jump dropdown menu
@@ -778,7 +875,9 @@ function init(){
         // change header message
         document.getElementById("sign-inup-header-message").innerHTML = "Welcome back!";
         // remove "Username" input field
-        signInUpFormGroup.removeChild(document.getElementById("sign-inup-username-input"));
+        if(document.getElementById("sign-inup-username-input")){
+            signInUpFormGroup.removeChild(document.getElementById("sign-inup-username-input"));
+        }
         // show "Forgot password?" link
         document.getElementById("forgot-pw-link").style.display = "block";
         // change form submit button value
@@ -817,12 +916,18 @@ function init(){
         modals["about"] = 1;
     });
 
-    // ACCOUNT SETTINGS, ADD CALENDAR, AND ADD CALENDAR GROUP BUTTON FUNCTIONALITY
+    // ACCOUNT SETTINGS, CUSTOMIZATION, ADD CALENDAR, AND ADD CALENDAR GROUP BUTTON FUNCTIONALITY
     if(!onIndexPage){
         // Add functionality to the "Account Settings" button in the sidebar
         let accountSettingsButton = document.getElementById("account-link");
         accountSettingsButton.addEventListener("click", function(){
             document.getElementById("account-settings-modal").classList.add("modal-show");
+        });
+
+        // Add functionality to the "Customization" button in the sidebar
+        let custButton = document.getElementById("settings-link");
+        custButton.addEventListener("click", function(){
+            document.getElementById("settings-modal").classList.add("modal-show");
         });
 
         // Add functionality to the "Add calendar" button in the sidebar
@@ -962,6 +1067,68 @@ function init(){
         }
         
     }
+
+
+
+/* ------------------------------- CUSTOMIZATION MODAL ------------------------------- */
+
+
+if(!onIndexPage){
+
+
+    // Add functionality to the save button in the Customization modal
+    /*
+    let accountSettingsSaveBtn = document.getElementById("save-account-settings-btn");
+    accountSettingsSaveBtn.onclick = function(){
+        let new_password = document.getElementById("new-pw-input").value.trim(); // strip leading and trailing whitespace
+        let confirm_password = document.getElementById("confirm-pw-input").value.trim();
+
+        if (new_password != confirm_password) {
+            document.getElementById("pw-error-message").style.display = "block";
+        }
+        else {
+            document.getElementById("new-pw-input").value = new_password;
+            document.getElementById("confirm-pw-input").value = confirm_password;
+            document.getElementById("account-settings-form").submit();
+        }
+    };
+    */
+
+    // Add functionality to the "Color Theme Picker" dropdown menu - change page color theme when a new one is selected
+    let colorThemeSelect = document.getElementById("color-theme-select");
+    colorThemeSelect.onchange = function(){
+        setColorTheme(colorThemeSelect.value);
+    };
+
+    // Add functionality to the "Calendar Item Font Size Picker" dropdown menu - change calendar item font size when a new one is selected
+    let fontSizeSelect = document.getElementById("item-fontsize-select");
+    fontSizeSelect.onchange = function(){
+        setItemFontSize(fontSizeSelect.value);
+    };
+
+    // Add functionality to the cancel button in the Customization modal
+    let custCancelBtn = document.getElementById("cancel-settings-btn");
+    custCancelBtn.onclick = function(){
+        document.getElementById("settings-modal").classList.remove("modal-show");   // hide the Customization modal
+        // reset the Customization modal and all options to their original state
+        document.getElementById("color-theme-select").value = userColorTheme;
+        document.getElementById("item-fontsize-select").value = userFontSize;
+        setColorTheme(userColorTheme);
+        setItemFontSize(userFontSize);
+
+    };
+}
+
+
+
+
+
+
+
+
+
+
+
 
     /* ------------------------------- ADD CALENDAR MODAL ------------------------------- */
 
@@ -1247,7 +1414,6 @@ function init(){
         changeItemModalHeader();    // ensure that calendar color is correct when modal is first opened
 
         modals["createItem"] = 1
-        console.log(" WHAT IS HAPPENING");
         createItemModal.classList.add("modal-show");
     }
 

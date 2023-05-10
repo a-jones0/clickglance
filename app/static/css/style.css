@@ -15,6 +15,10 @@
     --date-color: black;
     --today-accent-color: purple;
     --highlighted-day-color: aquamarine;
+    /* datejump dropdown variables */
+    --datejump-font-color: black;
+    --datejump-background-color: whitesmoke;
+    --datejump-hover-color: lightgray;
     /* side navbar variables */
     --side-navbar-width: 230px;
     --side-navbar-icon-width: 45px;
@@ -22,7 +26,7 @@
     --side-navbar-link-color: black;
     --side-navbar-link-hover-color: lightgray;
     /* modal variables */
-    --modal-background-color: blanchedalmond;
+    --modal-background-color: #FDF6EC;
     /* create calendar item modal variables */
     --create-item-modal-icon-width: 35px;
     --create-item-modal-body-right-margin: 20px;
@@ -30,8 +34,15 @@
     --create-item-modal-color: green;
     /* calendar item variables */
     --item-icon-width: 15px;
-    --item-background-color: lightblue;
-    --item-hover-background-color: wheat;
+    --item-font-color: black;
+    --item-font-size: 14px;
+    /* context menu variables */
+    --context-menu-background: rgb(255, 253, 226);
+    --context-menu-font-color: black;
+    --context-menu-hover-color: lightgray;
+    /* 'more options' icon in sidebar */
+    --more-options-hover-color: rgb(196, 194, 194);
+    
     /* calendar color palette */
     /* red colors */
     --red: rgba(255, 0, 0, 0.4);
@@ -67,6 +78,10 @@
 
 }
 
+html {
+    height: 100%;
+}
+
 /* container w/two rows: header & calendar grid*/
 body {
     display: flex;
@@ -74,7 +89,7 @@ body {
     margin-left: 50px;
     margin-right: 50px;
     margin-top: 0px;
-    background-color: var(--background-color);
+    background: var(--background-color);
     font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
 }
 
@@ -138,13 +153,14 @@ body {
     border: 1px solid gray;
     border-radius: 8px;
     padding-bottom: 5px;
+    color: var(--datejump-font-color);
 }
 
 /* Add this class to header-dropdown-contents to show the date-jump menu*/
 .dropdown-contents-show {
     display: block;
     position: absolute;
-    background-color:whitesmoke;
+    background-color:var(--datejump-background-color);
     z-index: 100;
 }
 
@@ -173,15 +189,16 @@ body {
     border-radius: 2px;
     background: none;
     border: none;
+    color: var(--datejump-font-color);
 }
 
 .dropdown-nav-arrow:hover {
-    background-color: lightgray;
+    background-color: var(--datejump-hover-color);
     cursor: pointer;
 }
 
 #header-dropdown-grid {
-    border-top: 1px solid lightgray;
+    /* border-top: 1px solid lightgray; */
 }
 
 button.date-jump-button {
@@ -190,10 +207,11 @@ button.date-jump-button {
     height: 35px;
     border: none;
     border-radius: 2px;
+    color: var(--datejump-font-color);
     }
 
 button.date-jump-button:hover {
-    background-color: lightgray;
+    background-color: var(--datejump-hover-color);
     cursor: pointer;
     }
 
@@ -232,7 +250,8 @@ button.date-jump-button:hover {
 }
 
 #today-button {
-    border: 1px solid black;
+    border: 1px solid;
+    border-color: var(--header-label-color);
     padding: 5px 15px;
 }
 
@@ -249,10 +268,11 @@ button.date-jump-button:hover {
     margin-left: -50px;
     width: var(--side-navbar-width);
     height: 100%;
-    background-color: var(--side-navbar-background-color);
+    background: var(--side-navbar-background-color);
     transition: width 0.1s;
     font-size: medium;
     z-index: 200;
+    backdrop-filter: blur(14px);
 }
 /* hide open-menu icon, show close-menu icon when sidebar is open*/
 .sidebar .open-menu-icon {
@@ -327,7 +347,7 @@ button.date-jump-button:hover {
 }
 
 .material-icons.more-options-icon:hover {
-    background-color: rgb(196, 194, 194);
+    background-color: var(--more-options-hover-color);
 }
 
 .sidebar-footer {
@@ -410,10 +430,12 @@ Add checkmark to select calendar checkbox in sidebar - can't see with dark color
     justify-content: center;
     align-items: center;
     padding-bottom: 10px;
+    color: var(--side-navbar-link-color);
 }
 
 #logged-in-user-circle {
-    border: 1px solid black;
+    border: 1px solid;
+    border-color: var(--side-navbar-link-color);
     border-radius: 50%;
     width: 40px;
     height: 40px;
@@ -527,6 +549,7 @@ Add checkmark to select calendar checkbox in sidebar - can't see with dark color
 .save-button {
     background-color: orange;
     border: 1px solid orange;
+    color: black;
 }
 
 .save-button:hover {
@@ -583,6 +606,18 @@ body.modal-show {
     width: 400px;
     border: 1px solid black;
     border-radius: 10px;
+}
+
+.modal-select {
+    background: none;
+    border: 1px solid black;
+    padding: 5px;
+    font-family: inherit;
+    font-size: medium;
+}
+
+.modal-select:hover {
+    cursor: pointer;
 }
 
 .create-item-icon-container {
@@ -646,7 +681,7 @@ body.modal-show {
 }
 
 #account-settings-modal input:hover {
-    border-bottom: 2px solid black;
+    border-bottom: 1px solid black;
 }
 
 #account-settings-modal-header {
@@ -688,6 +723,25 @@ body.modal-show {
     display: flex;
     justify-content: flex-end;
     flex-grow: 1;
+}
+
+/* SETTINGS MODAL */
+.settings-input-group {
+    flex-direction: column;
+}
+
+#settings-modal-content {
+    height: 275px;
+}
+
+#settings-modal-header {
+    margin-top: 10px;
+    margin-bottom: 15px;
+    text-align: left;
+}
+
+#settings-modal-footer {
+    border: none;
 }
 
 /* DELETE ACCOUNT MODAL */
@@ -915,30 +969,6 @@ body.modal-show {
 .palette-circle:hover {
     cursor: pointer;
     transform: scale(0.90);
-}
-
-#color-customize-link {
-    font-family: Arial, Helvetica, sans-serif;
-    font-size: small;
-    align-self: center;
-    color:#0F6CBD;
-}
-
-#color-customize-link:hover {
-    cursor: pointer;
-    text-decoration: underline;
-}
-
-#calendar-group-select {
-    background: none;
-    border: 1px solid black;
-    padding: 5px;
-    font-family: inherit;
-    font-size: medium;
-}
-
-#calendar-group-select:hover {
-    cursor: pointer;
 }
 
 #add-calendar-modal-footer {
@@ -1179,13 +1209,7 @@ input.sign-inup-input:focus {
     padding-left: 6px;
     user-select: none;
     font-family: sans-serif;
-    font-size: 14px;
-}
-
-.calendar-item:hover {
-    background-color: var(--item-hover-background-color);
-    cursor: pointer;
-    color:light
+    font-size: var(--item-font-size);
 }
 
 .calendar-item:active {
@@ -1224,7 +1248,7 @@ input.sign-inup-input:focus {
     position: absolute;
     border-radius: 3px;
     box-shadow: 0px 1px 3px gray;
-    background-color: rgb(255, 253, 226);  
+    background-color: var(--context-menu-background);  
     z-index: 300;
 }
 
@@ -1236,10 +1260,11 @@ input.sign-inup-input:focus {
     width: 100%;
     justify-content: flex-start;
     padding:5px 15px 5px 10px;
+    color: var(--context-menu-font-color);
 }
 
 .context-menu-item:hover {
-    background-color: lightgray;
+    background-color: var(--context-menu-hover-color);
     cursor: pointer;
 }
 
@@ -1259,7 +1284,7 @@ input.sign-inup-input:focus {
 
 /* SIDEBAR CALENDAR & CALENDAR GROUP LABEL CONTEXT MENU */
 .simple-context-menu {
-    background-color: white;
+    /* background-color: white; */
     font-family: Arial, Helvetica, sans-serif;
     font-size: small;
     position: fixed;
