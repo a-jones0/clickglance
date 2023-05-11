@@ -1412,14 +1412,13 @@ function init(){
         }
         // sign-in/sign-up modal
         else if (signInLink != null && modals["signInUp"]==1 && !document.getElementById("sign-inup-modal-content").contains(event.target) && !signInLink.contains(event.target)){
-            document.body.classList.remove("modal-show");
-            document.getElementById("sign-inup-modal").classList.remove("modal-show");
             showSignInModal();
+            document.getElementById("sign-inup-modal").classList.remove("modal-show");
             modals["signInUp"]=0;
         }
          // about modal
          else if (modals["about"]==1 && !document.getElementById("about-modal-content").contains(event.target) && !aboutBtn.contains(event.target)){
-            document.body.style.overflow = "scroll";
+            document.body.style.overflow = "inherit";
             document.getElementById("about-modal").classList.remove("modal-show");
             document.getElementById("sign-inup-submit-btn").style.backgroundColor = signInBtnColor;
             modals["about"]=0;

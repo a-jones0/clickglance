@@ -588,6 +588,11 @@ body.modal-show {
     z-index: 0;
 
 }
+
+.blur-modal {
+    backdrop-filter: blur(10px);
+}
+
 .modal-header {
     text-align: center;
     font-size: larger;
@@ -1122,6 +1127,7 @@ input.sign-inup-input {
     margin-bottom: 10px;
     outline: none;
     font-size: large;
+    font-family: Arial, sans-serif;
 }
 
 input.sign-inup-input:focus {
@@ -1140,6 +1146,26 @@ input.sign-inup-input:focus {
     cursor: pointer;
 }
 
+#sign-inup-modal-content {
+    padding-top: 25px;
+    height: 510px;
+    background: white;
+}
+
+#sign-inup-header-title {
+    margin-top: 2px;
+    margin-bottom: 0px;
+    font-family: 'Source Code Pro', 'Courier New', sans-serif;
+    font-size: larger;
+}
+
+#sign-inup-header-message {
+    margin-top: 17px;
+    font-family: Arial, sans-serif;
+    font-size: large;
+    color: gray;
+}
+
 #sign-inup-btn {
     width:100%;
     background: none;
@@ -1150,6 +1176,7 @@ input.sign-inup-input:focus {
 
 #sign-inup-modal-footer {
     flex-direction: column;
+    margin-top: 21px;
 }
 
 #forgot-pw-link {

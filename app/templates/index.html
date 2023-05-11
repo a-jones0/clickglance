@@ -16,6 +16,7 @@
         <!-- Stylesheet -->
         <link rel="stylesheet" type="text/css" href= "{{url_for('static', filename='css/style.css')}}">
         <!-- Google Fonts -->
+        <link href='https://fonts.googleapis.com/css?family=Source Code Pro' rel='stylesheet'>
         <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
         <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet" />
         <script type="text/javascript" src=" {{url_for('static', filename='script/script.js')}}" defer></script>
@@ -140,9 +141,10 @@
                 </div>
                 <div id="weeks-grid"></div>
             </div>
-            <div class="modal" id="sign-inup-modal">
+            <div class="modal blur-modal" id="sign-inup-modal">
                 <div class="modal-content" id="sign-inup-modal-content">
                     <div class="modal-header" id="sign-inup-modal-header">
+                        <img src="{{ url_for('static', filename='CGLogo-simple.png') }}" style="width: 50px;">
                         <p id="sign-inup-header-title">ClickGlance</p>
                         <p id="sign-inup-header-message">Welcome back!</p>
                     </div>
@@ -162,7 +164,7 @@
                     </div>
                 </div>
             </div>
-            <div class="modal" id="about-modal">
+            <div class="modal blur-modal" id="about-modal">
                 <div class="modal-content" id="about-modal-content">
                     <div class="modal-header" id="about-modal-header">
                         <p>About Modal Header</p>
