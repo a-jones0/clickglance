@@ -26,7 +26,7 @@ Fast forward to a few months after finishing college, and I wanted to learn some
   * All items in each day are ordered by type and then time (i.e. all tasks, then all assignments sorted by time, then all events sorted by start time).
 
 * Quickly Toggle Item Statuses
-  * Clicking on an item will visibily change its status. In order, the statuses are In Progress, High Priority, Complete, and Cancelled.
+  * Clicking on an item will visibily change its status. In order, the statuses are Incomplete, High Priority, Complete, and Cancelled.
 
 * Calendar and Calendar Group Creation
   * Create custom calendars with their own names and colors to group your items; create calendar groups to group your calendars.
@@ -62,3 +62,12 @@ Although this project is technically complete and I don't have any immediate pla
   * On-screen notifications and email summaries for upcoming calendar items. Congratulatory emails for completed items (e.g. "You've completed 7 tasks, 10 assignments, and 2 events so far this month. Congrats!"
 
 ## 6. Sources
+Before starting this project, I had minimal coding experience with HTML, CSS, and JavaScript from creating my website, and absolutely no experience using Flask or MySQL. I was only able to learn the skills needed to complete this project by watching videos and following tutorials, guides, and advice provided by countless generous people online. Although this is not a complete list of every page I visited or video I watched, here are the main resources I learned from:
+
+* StackOverflow
+* freeCodeCamp.org on YouTube
+  * [Full Stack Web Development for Beginners (Full Course on HTML, CSS, JavaScript, Node.js, MongoDB)](https://youtu.be/nu_pCVPKzTk)
+  * [Web Development with Python Tutorial – Flask & Dynamic Database-Driven Web Apps](https://youtu.be/yBDHkveJUf4)
+* ColorCode on YouTube
+  * [20 Things JavaScript Developers Should Know, but Probably Don't Playlist](https://youtube.com/playlist?list=PL1PqvM2UQiMoGNTaxFMSK2cih633lpFKP)
+* Tech With Tim on YouTube
