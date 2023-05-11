@@ -875,6 +875,9 @@ body.modal-show {
 }
 
 /* ABOUT MODAL */
+#about-modal {
+    backdrop-filter: blur(15px);
+}
 
 #about-modal-content{
     overflow-y: scroll;
@@ -1126,7 +1129,6 @@ input.sign-inup-input:focus {
 }
 
 .sign-inup-btn {
-    background: olivedrab;
     border: none;
     border-radius: 20px;
     margin-top: 15px;

@@ -172,7 +172,7 @@
                 <form id="settings-form" method="POST" action="/settings">
                     <div class="form-input-group settings-input-group" id="color-theme-section">
                         <div class="form-input-group-header" id="color-theme-header">Color Theme</div>
-                        <select class="modal-select" id="color-theme-select">
+                        <select class="modal-select" id="color-theme-select" name="color-theme-select">
                             {% for name in color_themes%}
                                 {% if name == user_color_theme  %}
                                     <option value="{{name}}" selected>{{ name }}</option>
@@ -184,7 +184,7 @@
                     </div>
                     <div class="form-input-group settings-input-group" id="calitem-fontsize-section">
                         <div class="form-input-group-header" id="calitem-fontsize-header">Calendar Item Font Size</div>
-                        <select class="modal-select" id="item-fontsize-select">
+                        <select class="modal-select" id="item-fontsize-select" name="item-fontsize-select">
                             {% for size in ["small", "14px", "large"] %}
                                 {% if size== user_font_size.lower() %}
                                     {% if size == "14px" %}
@@ -205,7 +205,7 @@
                 </form>
             </div>
             <div class="modal-footer" id="settings-modal-footer">
-                <button class="save-btn" id="save-settings-btn" type="button" value="save" form="settings-form">Save</button>
+                <button class="save-btn" id="save-settings-btn" type="submit" value="save" form="settings-form">Save</button>
                 <button class="cancel-btn" id="cancel-settings-btn" value="cancel">Cancel</button>
             </div>
         </div>

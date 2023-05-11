@@ -4,6 +4,7 @@
 
 function init(){
     const root = document.querySelector(':root');
+    const onIndexPage = document.getElementById("add-calendars-section") ? false : true;
     const weeksGrid = document.getElementById("weeks-grid");
     // Header (Date Jump) Dropdown Elements
     const header_text = document.getElementById("header-text");
@@ -286,8 +287,8 @@ function init(){
         root.style.setProperty("--item-font-size", fontSize);
     };
 
-    const userColorTheme = document.getElementById("color-theme-select").value;
-    const userFontSize = document.getElementById("item-fontsize-select").value; 
+    const userColorTheme = onIndexPage ? "Light" : document.getElementById("color-theme-select").value;
+    const userFontSize = onIndexPage ? "14px" : document.getElementById("item-fontsize-select").value; 
 
     setColorTheme(userColorTheme);
     setItemFontSize(userFontSize);
@@ -299,11 +300,9 @@ function init(){
     // Create the userCalendars object, which tracks all calendars
     const userCalendars = {};   // key: value = calendarId: {color: color, visible: true/false}
     let contextMenuCalendarLink;
-    let onIndexPage = true;
     let visSaveButton = false;
 
     for(const calendarLink of calendarLinks){
-        onIndexPage = false;
         let calendarLinkVisible = calendarLink.querySelector(".calendar-visible");
         let calendarColor = calendarLink.querySelector(".calendar-color");
 
@@ -681,7 +680,6 @@ function init(){
     // style items to be faded with strikethrough text if cancelled, normal styling otherwise
     function itemStatusStyle(calendarItem, itemStatus){
         calendarItem.style.color = getComputedStyle(root).getPropertyValue("--item-font-color");
-        console.log("font color?: ", getComputedStyle(root).getPropertyValue("--item-font-color"));
         if(itemStatus == "canceled" || itemStatus == "complete"){
             calendarItem.style.opacity = 0.5;
             if(itemStatus == "canceled"){
@@ -821,6 +819,8 @@ function init(){
     const signInUpModal = document.getElementById("sign-inup-modal");
     const signInUpBtn = document.getElementById("sign-inup-btn");   // "sign up" btn at bottom of sign-in modal & vice-versa
     const signInUpFormGroup = document.getElementById("sign-inup-form-group");
+    const signInBtnColor = "rgb(162, 210, 255)";
+    const signUpBtnColor = "#42b542";
     let aboutBtn = document.getElementById("about-link");   // let, not const, because about btn is on index and mycalendar pages
     let aboutModal = document.getElementById("about-modal");
     const modals = {signInUp: 0, about: 0, createItem: 0}; // 0 if modal is closed, 1 if modal is open
@@ -842,10 +842,7 @@ function init(){
     // Add functionality to the "Sign In" sidebar link - could be null if already signed in, no sign-in button on mycalendar page
     if(signInLink != null){
         signInLink.addEventListener("click", function(){
-            document.body.classList.add("modal-show");
-            signInUpModal.classList.add("modal-show");
-            modals["signInUp"] = 1;
-            signInShow = 1;
+            showSignInModal();
         });
     }
     // Add functionality to the "Sign Up"/"Sign In" button in the footer of the "Sign In/Up" modal (i.e."Don't have an account?"/"Already have an account?")
@@ -880,13 +877,17 @@ function init(){
         }
         // show "Forgot password?" link
         document.getElementById("forgot-pw-link").style.display = "block";
-        // change form submit button value
+        // change form submit button value and color
         document.getElementById("sign-inup-submit-btn").value = "Sign In";
+        document.getElementById("sign-inup-submit-btn").style.backgroundColor = signInBtnColor;
         //change form action
         document.getElementById("sign-inup-form").action = "/signin";
         // change footer message
         document.getElementById("sign-inup-footer-message").innerHTML = "Don't have an account?"
         signInUpBtn.innerHTML = "Sign Up";
+        // show the modal
+        signInUpModal.classList.add("modal-show");
+        modals["signInUp"] = 1;
         signInShow = 1;
     }
 
@@ -898,8 +899,9 @@ function init(){
         signInUpFormGroup.prepend(usernameInput)
         // hide "Forgot password?" link
         document.getElementById("forgot-pw-link").style.display = "none";
-        // change form submit button value
+        // change form submit button value and color
         document.getElementById("sign-inup-submit-btn").value = "Create Account";
+        document.getElementById("sign-inup-submit-btn").style.backgroundColor = signUpBtnColor;
         //change form action
         document.getElementById("sign-inup-form").action = "/register";
         // change footer message
@@ -910,43 +912,13 @@ function init(){
 
     // Add functionality to the "About" sidebar button
     aboutBtn.addEventListener("click", function(){
-        document.body.classList.add("modal-show");
+        document.body.style.overflow = "hidden";
         aboutModal.classList.add("modal-show");
         document.getElementById("about-modal").scrollTop = 0;
         modals["about"] = 1;
     });
 
-    // ACCOUNT SETTINGS, CUSTOMIZATION, ADD CALENDAR, AND ADD CALENDAR GROUP BUTTON FUNCTIONALITY
-    if(!onIndexPage){
-        // Add functionality to the "Account Settings" button in the sidebar
-        let accountSettingsButton = document.getElementById("account-link");
-        accountSettingsButton.addEventListener("click", function(){
-            document.getElementById("account-settings-modal").classList.add("modal-show");
-        });
-
-        // Add functionality to the "Customization" button in the sidebar
-        let custButton = document.getElementById("settings-link");
-        custButton.addEventListener("click", function(){
-            document.getElementById("settings-modal").classList.add("modal-show");
-        });
-
-        // Add functionality to the "Add calendar" button in the sidebar
-        let addCalendarButton = document.getElementById("add-calendar-link");
-        addCalendarButton.addEventListener("click", function(){
-            document.getElementById("add-calendar-modal").classList.add("modal-show");
-            // match title input color to default calendar color
-            let calColor = document.getElementById("add-calendar-color-input").value;
-            document.getElementById("add-calendar-name-input").style.borderColor = calColor;
-            document.getElementById("add-calendar-name-input").style.color = calColor;
-        });
-        
-        //Add functionality to the "Add calendar group" button in the sidebar
-        let addCalendarGroupButton = document.getElementById("add-calendar-group-link");
-        addCalendarGroupButton.onclick = function(){
-            document.getElementById("add-calendar-group-modal").classList.add("modal-show");
-        }
-        
-    }    
+    
 
     let contextMenuCalendarGroupLink; // the calendar group link for whom the context menu options apply
 
@@ -1014,11 +986,45 @@ function init(){
     // show tasks on visible calendars, hide tasks on hidden calendars
     toggleItemView();
 
-
-    /* ------------------------------- ACCOUNT SETTINGS & DELETE ACCOUNT MODAL ------------------------------- */
-
-
     if(!onIndexPage){
+
+
+        /* ---------- ACCOUNT SETTINGS, CUSTOMIZATION, ADD CALENDAR, AND ADD CALENDAR GROUP BUTTON FUNCTIONALITY ---------- */
+  
+
+        // Add functionality to the "Account Settings" button in the sidebar
+        let accountSettingsButton = document.getElementById("account-link");
+        accountSettingsButton.addEventListener("click", function(){
+            document.getElementById("account-settings-modal").classList.add("modal-show");
+        });
+
+        // Add functionality to the "Customization" button in the sidebar
+        let custButton = document.getElementById("settings-link");
+        custButton.addEventListener("click", function(){
+            document.getElementById("settings-modal").classList.add("modal-show");
+        });
+
+        // Add functionality to the "Add calendar" button in the sidebar
+        let addCalendarButton = document.getElementById("add-calendar-link");
+        addCalendarButton.addEventListener("click", function(){
+            document.getElementById("add-calendar-modal").classList.add("modal-show");
+            // match title input color to default calendar color
+            let calColor = document.getElementById("add-calendar-color-input").value;
+            document.getElementById("add-calendar-name-input").style.borderColor = calColor;
+            document.getElementById("add-calendar-name-input").style.color = calColor;
+        });
+        
+        //Add functionality to the "Add calendar group" button in the sidebar
+        let addCalendarGroupButton = document.getElementById("add-calendar-group-link");
+        addCalendarGroupButton.onclick = function(){
+            document.getElementById("add-calendar-group-modal").classList.add("modal-show");
+        }
+           
+
+
+        /* ------------------------------- ACCOUNT SETTINGS & DELETE ACCOUNT MODAL ------------------------------- */
+
+
         // Add functionality to the save button in the Account Settings modal
         let accountSettingsSaveBtn = document.getElementById("save-account-settings-btn");
         accountSettingsSaveBtn.onclick = function(){
@@ -1066,68 +1072,34 @@ function init(){
             accountSettingsModal.querySelector("#confirm-pw-input").value = "";
         }
         
+
+        /* ------------------------------- CUSTOMIZATION MODAL ------------------------------- */
+
+
+        // Add functionality to the "Color Theme Picker" dropdown menu - change page color theme when a new one is selected
+        let colorThemeSelect = document.getElementById("color-theme-select");
+        colorThemeSelect.onchange = function(){
+            setColorTheme(colorThemeSelect.value);
+        };
+
+        // Add functionality to the "Calendar Item Font Size Picker" dropdown menu - change calendar item font size when a new one is selected
+        let fontSizeSelect = document.getElementById("item-fontsize-select");
+        fontSizeSelect.onchange = function(){
+            setItemFontSize(fontSizeSelect.value);
+        };
+
+        // Add functionality to the cancel button in the Customization modal
+        let custCancelBtn = document.getElementById("cancel-settings-btn");
+        custCancelBtn.onclick = function(){
+            document.getElementById("settings-modal").classList.remove("modal-show");   // hide the Customization modal
+            // reset the Customization modal and all options to their original state
+            document.getElementById("color-theme-select").value = userColorTheme;
+            document.getElementById("item-fontsize-select").value = userFontSize;
+            setColorTheme(userColorTheme);
+            setItemFontSize(userFontSize);
+
+        };
     }
-
-
-
-/* ------------------------------- CUSTOMIZATION MODAL ------------------------------- */
-
-
-if(!onIndexPage){
-
-
-    // Add functionality to the save button in the Customization modal
-    /*
-    let accountSettingsSaveBtn = document.getElementById("save-account-settings-btn");
-    accountSettingsSaveBtn.onclick = function(){
-        let new_password = document.getElementById("new-pw-input").value.trim(); // strip leading and trailing whitespace
-        let confirm_password = document.getElementById("confirm-pw-input").value.trim();
-
-        if (new_password != confirm_password) {
-            document.getElementById("pw-error-message").style.display = "block";
-        }
-        else {
-            document.getElementById("new-pw-input").value = new_password;
-            document.getElementById("confirm-pw-input").value = confirm_password;
-            document.getElementById("account-settings-form").submit();
-        }
-    };
-    */
-
-    // Add functionality to the "Color Theme Picker" dropdown menu - change page color theme when a new one is selected
-    let colorThemeSelect = document.getElementById("color-theme-select");
-    colorThemeSelect.onchange = function(){
-        setColorTheme(colorThemeSelect.value);
-    };
-
-    // Add functionality to the "Calendar Item Font Size Picker" dropdown menu - change calendar item font size when a new one is selected
-    let fontSizeSelect = document.getElementById("item-fontsize-select");
-    fontSizeSelect.onchange = function(){
-        setItemFontSize(fontSizeSelect.value);
-    };
-
-    // Add functionality to the cancel button in the Customization modal
-    let custCancelBtn = document.getElementById("cancel-settings-btn");
-    custCancelBtn.onclick = function(){
-        document.getElementById("settings-modal").classList.remove("modal-show");   // hide the Customization modal
-        // reset the Customization modal and all options to their original state
-        document.getElementById("color-theme-select").value = userColorTheme;
-        document.getElementById("item-fontsize-select").value = userFontSize;
-        setColorTheme(userColorTheme);
-        setItemFontSize(userFontSize);
-
-    };
-}
-
-
-
-
-
-
-
-
-
-
 
 
     /* ------------------------------- ADD CALENDAR MODAL ------------------------------- */
@@ -1447,8 +1419,9 @@ if(!onIndexPage){
         }
          // about modal
          else if (modals["about"]==1 && !document.getElementById("about-modal-content").contains(event.target) && !aboutBtn.contains(event.target)){
-            document.body.classList.remove("modal-show");
+            document.body.style.overflow = "scroll";
             document.getElementById("about-modal").classList.remove("modal-show");
+            document.getElementById("sign-inup-submit-btn").style.backgroundColor = signInBtnColor;
             modals["about"]=0;
         }
         else if (modals["createItem"]==1 && !document.getElementById("create-item-modal-content").contains(event.target) && !document.getElementById("item-context-menu").contains(event.target)){

@@ -77,7 +77,6 @@ def inactiveAccount():
     else:
         return redirect(url_for("index"))
     
-
 @cg_app.route("/activateaccount/<token>", methods=['GET'])
 def activateAccount(token):
     if "email" in session:
@@ -492,6 +491,21 @@ def accountSettings():
             user.password = bcrypt.generate_password_hash(new_password).decode('utf-8')
             db.session.commit()
         flash("Account successfully updated!", "info")
+        return redirect(url_for("myCalendar"))
+    else:
+        return redirect(url_for("index"))
+
+@cg_app.route("/settings", methods=['GET', 'POST'])
+def settings():
+    if request.method == 'POST':
+        found_user = Users.query.filter_by(email=session["email"]).first()
+        new_color_theme = request.form.get("color-theme-select")
+        new_font_size = request.form.get("item-fontsize-select")
+
+        found_user.color_theme = new_color_theme
+        found_user.font_size = new_font_size
+        db.session.commit()
+        flash("Settings successfully updated!", "info")
         return redirect(url_for("myCalendar"))
     else:
         return redirect(url_for("index"))
