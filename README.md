@@ -34,7 +34,7 @@ Fast forward to a few months after finishing college, and I wanted to learn some
   * All items in each day are ordered by type and then time (i.e. all tasks, then all assignments sorted by time, then all events sorted by start time).
 
 * Quickly Toggle Item Statuses
-  * Clicking on an item will visibily change its status. In order, the statuses are Incomplete, High Priority, Complete, and Cancelled.
+  * Clicking on an item will visibly change its status. In order, the statuses are Incomplete, High Priority, Complete, and Cancelled.
 
 * Calendar and Calendar Group Creation
   * Create custom calendars with their own names and colors to group your items; create calendar groups to group your calendars.
