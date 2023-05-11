@@ -66,6 +66,9 @@ Although this project is technically complete and I don't have any immediate pla
 * Weekly View
   * I've never been a fan of week-view layouts (I like being able to see the entire month laid out on the screen), but I know it's typically a must-have for planner apps.
 
+* Printable Layout
+  * A clear, easy-to-read version of the calendar that prints and exports to PDF nicely.
+
 * Notifications & Email Reminders
   * On-screen notifications and email summaries for upcoming calendar items. Congratulatory emails for completed items (e.g. "You've completed 7 tasks, 10 assignments, and 2 events so far this month. Congrats!"
  
