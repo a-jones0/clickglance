@@ -42,3 +42,23 @@ Fast forward to a few months after finishing college, and I wanted to learn some
 * CSS
 * JavaScript
 * MySQL & MySQL Workbench
+
+## 5. Status
+Although this project is technically complete and I don't have any immediate plans to continue working on it, there are quite a few features I would love to implement:
+
+* Item View Pane
+  * A side panel that lists all items for a certain day or for the month. User can filter what kinds of items are shown (e.g. only tasks and events or only assignments)
+
+* Item Search
+  * A search bar/pane that returns items with matching titles - clicking on the resulting title would change the calendar view to the item's assigned day.
+
+* Micro Tasks
+  * Smaller subtasks for "task" and "assignment" items, likely in some kind of toggleable dropdown so as not to take up too much screen real estate. 
+
+* Weekly View
+  * I've never been a fan of week-view layouts (I like being able to see the entire month laid out on the screen), but I know it's a must-have for most planner app users.
+
+* Notifications & Email Reminders
+  * On-screen notifications and email summaries for upcoming calendar items. Congratulatory emails for completed items (e.g. "You've completed 7 tasks, 10 assignments, and 2 events so far this month. Congrats!"
+
+## 6. Sources
