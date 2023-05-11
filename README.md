@@ -33,11 +33,11 @@ Fast forward to a few months after finishing college, and I wanted to learn some
   * Add tasks (due date), assignments (due date and time), and events (start date/time and end date/time) to your calendar.
   * All items in each day are ordered by type and then time (i.e. all tasks, then all assignments sorted by time, then all events sorted by start time).
 
-* Quickly Toggle Item Statuses
+* Quickly Change Item Statuses
   * Clicking on an item will visibly change its status. In order, the statuses are Incomplete, High Priority, Complete, and Cancelled.
 
 * Calendar and Calendar Group Creation
-  * Create custom calendars with their own names and colors to group your items; create calendar groups to group your calendars.
+  * Create custom calendars with their own names and colors to group your items - toggle all items associated with a calendar to be visible or hidden; create calendar groups to group your calendars.
 
 * Color Themes
   * Choose from a selection of color themes to give your page a personal touch - light and dark mode included!
