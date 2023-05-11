@@ -1,5 +1,13 @@
 # ClickGlance: A Calendar/To-Do List Web Application
 
+## Table of Contents
+[1. Overview](#1-overview)  
+[2. Motivation](#2-motivation)  
+[3. Features](#3-features)  
+[4. Technologies](#4-technologies)  
+[5. Status](#5-status)  
+[6. Sources](#6-sources)  
+
 ## 1. Overview
 
 ClickGlance is a simple calendar planner with to-do list capabilities. Inspired by Outlook Calendar, users can create items (tasks, assignments, and events) that will appear on a month-view calendar grid. Clicking on these items will cycle them through a list of possible statuses: Incomplete (default), High Priority, Complete, and Cancelled. Users can create multiple calendars to group their items, and multiple calendar groups to group their calendars.
