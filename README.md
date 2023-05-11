@@ -64,10 +64,16 @@ Although this project is technically complete and I don't have any immediate pla
   * Smaller subtasks for "task" and "assignment" items, likely in some kind of toggleable dropdown so as not to take up too much screen real estate. 
 
 * Weekly View
-  * I've never been a fan of week-view layouts (I like being able to see the entire month laid out on the screen), but I know it's a must-have for most planner app users.
+  * I've never been a fan of week-view layouts (I like being able to see the entire month laid out on the screen), but I know it's typically a must-have for planner apps.
 
 * Notifications & Email Reminders
   * On-screen notifications and email summaries for upcoming calendar items. Congratulatory emails for completed items (e.g. "You've completed 7 tasks, 10 assignments, and 2 events so far this month. Congrats!"
+ 
+* More Customization Options
+  * Color themes, fonts, calendar view behavior (e.g. option to hide calendar items after there's a certain number of items in a day), 24-hour time
+
+* Mobile Version
+  * The layout and structure of this web-app is not mobile-friendly, so some restructuring would be needed to make it so.
 
 ## 6. Sources
 Before starting this project, I had minimal coding experience with HTML, CSS, and JavaScript from creating my website, and absolutely no experience using Flask or MySQL. I was only able to learn the skills needed to complete this project by watching videos and following tutorials, guides, and advice provided by countless generous people online. Here are the main resources I used on my learning journey:
