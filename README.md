@@ -62,12 +62,30 @@ Although this project is technically complete and I don't have any immediate pla
   * On-screen notifications and email summaries for upcoming calendar items. Congratulatory emails for completed items (e.g. "You've completed 7 tasks, 10 assignments, and 2 events so far this month. Congrats!"
 
 ## 6. Sources
-Before starting this project, I had minimal coding experience with HTML, CSS, and JavaScript from creating my website, and absolutely no experience using Flask or MySQL. I was only able to learn the skills needed to complete this project by watching videos and following tutorials, guides, and advice provided by countless generous people online. Although this is not a complete list of every page I visited or video I watched, here are the main resources I learned from:
+Before starting this project, I had minimal coding experience with HTML, CSS, and JavaScript from creating my website, and absolutely no experience using Flask or MySQL. I was only able to learn the skills needed to complete this project by watching videos and following tutorials, guides, and advice provided by countless generous people online. Here are the main resources I used on my learning journey:
 
+* YouTube
+  * freeCodeCamp.org
+    * [Full Stack Web Development for Beginners (Full Course on HTML, CSS, JavaScript, Node.js, MongoDB)](https://youtu.be/nu_pCVPKzTk)
+    * [Web Development with Python Tutorial – Flask & Dynamic Database-Driven Web Apps](https://youtu.be/yBDHkveJUf4)
+  * ColorCode
+    * [20 Things JavaScript Developers Should Know, but Probably Don't Playlist](https://youtube.com/playlist?list=PL1PqvM2UQiMoGNTaxFMSK2cih633lpFKP)
+  * Tech With Tim
+    * [Flask Tutorials](https://youtube.com/playlist?list=PLzMcBGfZo4-n4vJJybUVV3Un_NFS5EOgX)
+  * Danielle Thé
+    * [What is SQL? [in 4 minutes for beginners]](https://youtu.be/27axs9dO7AE)
+  * 365 Data Science
+    * [MySQL IN 10 MINUTES | Introduction to Databases, SQL, & MySQL](https://youtu.be/2bW3HuaAUcY)
+  * Socratica
+    * [SQL Joins Explained |¦| Joins in SQL |¦| SQL Tutorial](https://youtu.be/9yeOJ0ZMUYw)
+  * Web Dev Simplified
+    * [How To Install MySQL (Server and Workbench)](https://youtu.be/u96rVINbAUI)
+* W3Schools Online Web Tutorials
+    * [HTML Tutorial](https://www.w3schools.com/html/default.asp)
+    * [CSS Tutorial](https://www.w3schools.com/css/default.asp)
+    * [JavaScript Tutorial](https://www.w3schools.com/js/default.asp)
+    * [SQL Tutorial](https://www.w3schools.com/sql/default.asp)
+* [MySQL 8.0 Reference Manual](https://dev.mysql.com/doc/refman/8.0/en/)
+* [MySQL Tutorial](https://www.mysqltutorial.org/)
+* [Flask Documentation (2.3.x)](https://flask.palletsprojects.com/en/2.3.x/)
 * StackOverflow
-* freeCodeCamp.org on YouTube
-  * [Full Stack Web Development for Beginners (Full Course on HTML, CSS, JavaScript, Node.js, MongoDB)](https://youtu.be/nu_pCVPKzTk)
-  * [Web Development with Python Tutorial – Flask & Dynamic Database-Driven Web Apps](https://youtu.be/yBDHkveJUf4)
-* ColorCode on YouTube
-  * [20 Things JavaScript Developers Should Know, but Probably Don't Playlist](https://youtube.com/playlist?list=PL1PqvM2UQiMoGNTaxFMSK2cih633lpFKP)
-* Tech With Tim on YouTube
