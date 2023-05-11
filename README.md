@@ -80,6 +80,8 @@ Before starting this project, I had minimal coding experience with HTML, CSS, an
     * [SQL Joins Explained |¦| Joins in SQL |¦| SQL Tutorial](https://youtu.be/9yeOJ0ZMUYw)
   * Web Dev Simplified
     * [How To Install MySQL (Server and Workbench)](https://youtu.be/u96rVINbAUI)
+  * Vic Oyedeji
+    * [How to Set Up FREE Email With Your Own Domain Name (2023) | Free Business Email] (https://www.youtube.com/watch?v=xdGG-9aKq74)
 * W3Schools Online Web Tutorials
     * [HTML Tutorial](https://www.w3schools.com/html/default.asp)
     * [CSS Tutorial](https://www.w3schools.com/css/default.asp)
@@ -88,4 +90,8 @@ Before starting this project, I had minimal coding experience with HTML, CSS, an
 * [MySQL 8.0 Reference Manual](https://dev.mysql.com/doc/refman/8.0/en/)
 * [MySQL Tutorial](https://www.mysqltutorial.org/)
 * [Flask Documentation (2.3.x)](https://flask.palletsprojects.com/en/2.3.x/)
+* [SQLAlchemy Documentation (2.0)](https://docs.sqlalchemy.org/en/20/index.html)
+* [The Flask Mega-Tutorial by Miguel Grinberg](https://blog.miguelgrinberg.com/post/the-flask-mega-tutorial-part-i-hello-world)
+    * This tutorial was essential when setting up Flask-Mail and restructuring my project files. I believe I referenced Chapters 1-5 & 10, specifically looking for how to set up a configuration file, handle imports with the new project file structure, and send emails.
 * StackOverflow
+  * For all the errors I couldn't figure out and the random questions I needed answers to.
