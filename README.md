@@ -17,6 +17,19 @@ Fast forward to a few months after finishing college, and I wanted to learn some
 ## 3. Features
 
 * Calendar View
-..* A large, simple calendar grid with a month-view.
-..* ..* Today's date is indicated by a solid bar above it in the calendar grid. Clicking on a different day will automatically highlight it.
-..* ..* Quickly toggle both to adjacent months and back to the current day with the buttons in the navbar. Also easily jump to different months and years by clicking on the calendar's month/year and using the date-jump dropdown menu. 
+  * A large, simple calendar grid with a month-view.
+    * Today's date is indicated by a solid bar above it in the calendar grid. Clicking on a different day will automatically highlight it.
+    * Quickly toggle both to adjacent months and back to the current day with the buttons in the navbar. Also easily jump to different months and years by clicking on the calendar's month/year and using the date-jump dropdown menu. 
+
+* Item Types
+  * Add tasks (due date), assignments (due date and time), and events (start date/time and end date/time) to your calendar.
+  * All items in each day are ordered by type and then time (i.e. all tasks, then all assignments sorted by time, then all events sorted by start time).
+
+* Quickly Toggle Item Statuses
+  * Clicking on an item will visibily change its status. In order, the statuses are In Progress, High Priority, Complete, and Cancelled.
+
+* Calendar and Calendar Group Creation
+  * Create custom calendars with their own names and colors to group your items; create calendar groups to group your calendars.
+
+* Color Themes
+  * Choose from a selection of color themes to give your page a personal touch - light and dark mode included!
