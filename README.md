@@ -19,7 +19,7 @@ Fast forward to a few months after finishing college, and I wanted to learn some
 * Calendar View
   * A large, simple calendar grid with a month-view.
     * Today's date is indicated by a solid bar above it in the calendar grid. Clicking on a different day will automatically highlight it.
-    * Quickly toggle both to adjacent months and back to the current day with the buttons in the navbar. Also easily jump to different months and years by clicking on the calendar's month/year and using the date-jump dropdown menu. 
+    * Quickly toggle both to adjacent months and back to the current day with the buttons in the navbar. Also easily jump to different months and years by clicking on the calendar's "title" (i.e. month/year) and using the date-jump dropdown menu. 
 
 * Item Types
   * Add tasks (due date), assignments (due date and time), and events (start date/time and end date/time) to your calendar.
@@ -33,3 +33,12 @@ Fast forward to a few months after finishing college, and I wanted to learn some
 
 * Color Themes
   * Choose from a selection of color themes to give your page a personal touch - light and dark mode included!
+
+## 4. Technologies
+* Python 3.11.2
+* Flask 2.2.3
+* Werkzeug 2.2.3
+* HTML
+* CSS
+* JavaScript
+* MySQL & MySQL Workbench
