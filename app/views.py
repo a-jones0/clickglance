@@ -591,7 +591,12 @@ def loadCalendar(user, month=datetime.now().month, year=datetime.now().year, dem
                                               assignments=[a for a in session["items"] if a["itemType"]=="assignment"], 
                                               events=[event for event in session["items"] if event["itemType"]=="event"], month=month, year=year)
         else:
-            return render_template("index.html",  tasks=[], assignments=[], events=[], month=month, year=year, user_color_theme="Light", user_font_size = "14px")
+            # automatically open About modal when the page is first opened
+            if "visited" in session:
+                return render_template("index.html",  tasks=[], assignments=[], events=[], month=month, year=year, visited="true")
+            else:
+                session["visited"] = "true"
+                return render_template("index.html",  tasks=[], assignments=[], events=[], month=month, year=year, visited="false")
     else:
         user_calendar_groups = Calendar_Groups.query.filter_by(userId=user.userId).order_by(Calendar_Groups.calGroupId).all()
         user_calendars = Calendars.query.filter_by(userId=user.userId).order_by(Calendars.calGroupId).all()

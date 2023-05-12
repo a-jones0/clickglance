@@ -36,7 +36,6 @@
     {% endwith %}
     <body>
         {% block content %}
-
             <header id="page-header">
                 <div id="header-label">
                     <div id="header-dropdown">
@@ -167,22 +166,82 @@
             <div class="modal blur-modal" id="about-modal">
                 <div class="modal-content" id="about-modal-content">
                     <div class="modal-header" id="about-modal-header">
-                        <p>About Modal Header</p>
+                        <h1 id="about-title">
+                            <div id="about-title-flex-container">
+                                ClickGlance
+                                <img src="{{ url_for('static', filename='CGLogo-simple.png') }}" id="about-header-logo">
+                            </div>
+                            
+                            <span id="about-title-caption">A Calendar/To-Do List Web App</span> 
+                        </h1>
+                        <hr>
                     </div>
                     <div class="modal-body" id="about-modal-body">
+                        <p id="about-descrip">A simple planner structured around a spacious monthly view. Stay motivated for the tasks ahead by keeping in view all of your previous accomplishments.</p>
+                        <iframe id="about-video-frame" width="560" height="315" src="https://www.youtube-nocookie.com/embed/_Q8wNcJu1tU" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+                        <p>Minimize stress, maximize happiness!</p>
+                        
+                        <div id="about-features-section">
+                            <h2 class="about-section-header" id="features-header">Features</h2>
 
-                        Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Nunc id cursus metus aliquam. Aenean pharetra magna ac placerat. Pulvinar proin gravida hendrerit lectus. Nunc pulvinar sapien et ligula ullamcorper malesuada proin. Aliquet porttitor lacus luctus accumsan. Aliquet bibendum enim facilisis gravida neque convallis a. In fermentum posuere urna nec tincidunt praesent semper. Mattis enim ut tellus elementum sagittis. At tempor commodo ullamcorper a lacus vestibulum sed arcu. Risus feugiat in ante metus. Magna etiam tempor orci eu lobortis. Morbi tempus iaculis urna id volutpat lacus. Quis hendrerit dolor magna eget. Nunc mi ipsum faucibus vitae aliquet nec. Ut placerat orci nulla pellentesque dignissim. Viverra orci sagittis eu volutpat odio facilisis mauris sit. Imperdiet proin fermentum leo vel orci porta. Tortor posuere ac ut consequat semper viverra nam libero justo. Fermentum posuere urna nec tincidunt praesent semper.
+                            <h3 class="about-section-title" id="calendar-view-title">Calendar View</h3>
+                            <div class="indent" id="calendar-view-descrip">
+                                A large, simple calendar grid with a month view.
+                                <ul>
+                                    <li>Quickly toggle to adjacent months and back to the current day with the buttons in the navbar.</li>
+                                    <li>Easily jump to different months and years by clicking on the calendar's title and using the date-jump dropdown menu.</li>
+                                </ul>
+                            </div>
 
-                        Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Nunc id cursus metus aliquam. Aenean pharetra magna ac placerat. Pulvinar proin gravida hendrerit lectus. Nunc pulvinar sapien et ligula ullamcorper malesuada proin. Aliquet porttitor lacus luctus accumsan. Aliquet bibendum enim facilisis gravida neque convallis a. In fermentum posuere urna nec tincidunt praesent semper. Mattis enim ut tellus elementum sagittis. At tempor commodo ullamcorper a lacus vestibulum sed arcu. Risus feugiat in ante metus. Magna etiam tempor orci eu lobortis. Morbi tempus iaculis urna id volutpat lacus. Quis hendrerit dolor magna eget. Nunc mi ipsum faucibus vitae aliquet nec. Ut placerat orci nulla pellentesque dignissim. Viverra orci sagittis eu volutpat odio facilisis mauris sit. Imperdiet proin fermentum leo vel orci porta. Tortor posuere ac ut consequat semper viverra nam libero justo. Fermentum posuere urna nec tincidunt praesent semper.
+                            <h3 class="about-section-title" id="item-types-title">Item Types</h3>
+                            <div class="indent" id="item-types-descrip">
+                                Add three types of items to your calendar:
+                                <ul>
+                                    <li>Tasks (due date)</li>
+                                    <li>Assignments (due date and time)</li>
+                                    <li>Events (start date/time and end date/time)</li>
+                                </ul>
+                                All items in each day are ordered by type and then time (i.e. all tasks, then all assignments sorted by time, then all events sorted by start time).
+                            </div>
 
-                        Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Nunc id cursus metus aliquam. Aenean pharetra magna ac placerat. Pulvinar proin gravida hendrerit lectus. Nunc pulvinar sapien et ligula ullamcorper malesuada proin. Aliquet porttitor lacus luctus accumsan. Aliquet bibendum enim facilisis gravida neque convallis a. In fermentum posuere urna nec tincidunt praesent semper. Mattis enim ut tellus elementum sagittis. At tempor commodo ullamcorper a lacus vestibulum sed arcu. Risus feugiat in ante metus. Magna etiam tempor orci eu lobortis. Morbi tempus iaculis urna id volutpat lacus. Quis hendrerit dolor magna eget. Nunc mi ipsum faucibus vitae aliquet nec. Ut placerat orci nulla pellentesque dignissim. Viverra orci sagittis eu volutpat odio facilisis mauris sit. Imperdiet proin fermentum leo vel orci porta. Tortor posuere ac ut consequat semper viverra nam libero justo. Fermentum posuere urna nec tincidunt praesent semper.
+                            <h3 class="about-section-title" id="change-status-title">Change Item Status</h3>
+                            <p class="indent" id="Change-status-descrip">
+                                Clicking on an item will visibly change its status. In order, the statuses are Incomplete, High Priority, Complete, and Cancelled.
+                            </p>
 
-                        Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Nunc id cursus metus aliquam. Aenean pharetra magna ac placerat. Pulvinar proin gravida hendrerit lectus. Nunc pulvinar sapien et ligula ullamcorper malesuada proin. Aliquet porttitor lacus luctus accumsan. Aliquet bibendum enim facilisis gravida neque convallis a. In fermentum posuere urna nec tincidunt praesent semper. Mattis enim ut tellus elementum sagittis. At tempor commodo ullamcorper a lacus vestibulum sed arcu. Risus feugiat in ante metus. Magna etiam tempor orci eu lobortis. Morbi tempus iaculis urna id volutpat lacus. Quis hendrerit dolor magna eget. Nunc mi ipsum faucibus vitae aliquet nec. Ut placerat orci nulla pellentesque dignissim. Viverra orci sagittis eu volutpat odio facilisis mauris sit. Imperdiet proin fermentum leo vel orci porta. Tortor posuere ac ut consequat semper viverra nam libero justo. Fermentum posuere urna nec tincidunt praesent semper.
+                            <h3 class="about-section-title" id="calcreation-title">Calendar and Calendar Group Creation</h3>
+                            <div class="indent" id="calcreation-descrip">
+                                Create custom calendars with their own names and colors to group your items.
+                                <ul>
+                                    <li>Easily toggle all items associated with a calendar to be visible or hidden. </li>
+                                </ul>
+                                Create calendar groups to group your calendars.
+                            </div>
+                            
+                            <h3 class="about-section-title" id="color-themes-title">Color Themes</h3>
+                            <p class="indent" id="color-themes-descrip">
+                                Choose from a selection of color themes to give your page a personal touch - light and dark mode included!
+                            </p>
+                        </div>
+                        
+                        <div id="about-about-section">
+                            <h2 class="about-section-header" id="about-header">About</h2>
+                            <p>
+                                ClickGlance started as a personal project to learn web development skills, and it is now a fully-fledged web app! You can find the code and more information about its status on <a href="https://github.com/a-jones0/clickglance">GitHub</a>
+                            </p>
+                        </div>
 
+                        <div id="about-contact-section">
+                            <h2 class="about-section-header" id="contact-header">Contact</h2>
+                            <p>
+                                Questions? Comments? Issues? Please let me know - I'd love to hear from you! Feel free to send a message to <a href="mailto: support@clickglance.com">support@clickglance.com</a>
+                            </p>
+                        </div>
 
                     </div>
+          
                     <div class="modal-footer" id="about-modal-footer">
-                        <p>About Modal Footer</p>
+                        <p id="about-footer-text">Designed, Developed, and Dotingly Debugged by <a href="https://a-jones0.github.io/website/">Aishah Jones</a> </p>
                     </div>
                 </div>
             </div>
@@ -392,5 +451,6 @@
                 {% endfor %}
             </div>
         {% endblock %}
+            <div class="hidden-items" id="visited-page">{{visited}}</div>
     </body>
 </html>

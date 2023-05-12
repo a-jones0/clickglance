@@ -401,6 +401,8 @@ function init(){
             let calColor = document.getElementById("add-calendar-color-input").value;
             document.getElementById("add-calendar-name-input").style.borderColor = calColor;
             document.getElementById("add-calendar-name-input").style.color = calColor;
+            // match calendar group in dropdown select
+            document.getElementById("calendar-group-select").value = contextMenuCalendarLink.querySelector(".calendar-group-id").innerHTML;
             addCalendarModal.classList.add("modal-show");
             document.getElementById("add-edit-cal-indicator").value = calId; // if value is "add", then adding calendar, otherwise editing calendar with calId 
         });
@@ -912,13 +914,22 @@ function init(){
 
     // Add functionality to the "About" sidebar button
     aboutBtn.addEventListener("click", function(){
+        openAboutModal();
+    });
+
+    function openAboutModal(){
         document.body.style.overflow = "hidden";
         aboutModal.classList.add("modal-show");
         document.getElementById("about-modal").scrollTop = 0;
+        document.getElementById("about-modal-content").style.width = "568px";
         modals["about"] = 1;
-    });
+    }
 
-    
+    if(onIndexPage){
+        if(document.getElementById("visited-page").innerHTML == "false"){
+            openAboutModal();
+        }
+    }
 
     let contextMenuCalendarGroupLink; // the calendar group link for whom the context menu options apply
 
@@ -1136,6 +1147,7 @@ function init(){
             addCalendarModal.querySelector(".modal-header").innerHTML = "Create New Calendar";
             addCalendarModal.querySelector("#add-calendar-name-input").value = "";
             addCalendarModal.querySelector("#add-calendar-color-input").value = "blue";
+            addCalendarModal.querySelector("#calendar-group-select").selectedIndex = 0; // ensures first calgroup is selected after potentially opening the "edit calendar" modal
             document.getElementById("add-edit-cal-indicator").value = "add"; // if value is "add", then adding calendar, otherwise editing calendar with calId 
         };
     }
@@ -1421,6 +1433,7 @@ function init(){
             document.body.style.overflow = "inherit";
             document.getElementById("about-modal").classList.remove("modal-show");
             document.getElementById("sign-inup-submit-btn").style.backgroundColor = signInBtnColor;
+            document.getElementById("about-modal-content").style.width = "0px";
             modals["about"]=0;
         }
         else if (modals["createItem"]==1 && !document.getElementById("create-item-modal-content").contains(event.target) && !document.getElementById("item-context-menu").contains(event.target)){
