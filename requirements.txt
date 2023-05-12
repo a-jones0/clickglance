@@ -3,4 +3,5 @@ Flask-Mail
 flask-bcrypt
 Flask-SQLAlchemy
 SQLAlchemy
+mysqlclient
 gunicorn
