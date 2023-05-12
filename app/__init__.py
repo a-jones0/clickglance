@@ -17,4 +17,4 @@ mail = Mail(cg_app)
 from app import views, models
 
 if __name__ == "__main__":
-    cg_app.run(debug=True)
+    cg_app.run()

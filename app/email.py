@@ -16,6 +16,8 @@ def send_email(subject, sender, recipients, text_body, html_body):
 
 def send_password_reset_email(user):
     token = user.get_token()
+    user.pwreset_token = token
+    db.session.commit()
     send_email('Reset Your Password',
                sender=cg_app.config['MAIL_USERNAME'], 
                recipients=[user.email],

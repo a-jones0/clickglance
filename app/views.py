@@ -205,10 +205,15 @@ def resetPassword(token):
         if request.method == 'GET':
             user = Users.verify_token(token)
             if user:
-                return render_template("resetpassword.html", token=token, user_id = user.userId)
+                # if user has requested multiple reset links, ensures that only the most recent can be used
+                if token == user.pwreset_token:
+                    return render_template("resetpassword.html", token=token, user_id = user.userId)
+                else:
+                    flash("Invalid link", "error")
+                    return redirect(url_for("index"))
             # invalid token
             else:
-                flash("Invalid link", "error")
+                flash("Invalid or expired link", "error")
                 return redirect(url_for("index"))
         # submitted "reset password" form
         else:
