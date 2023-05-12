@@ -19,7 +19,7 @@
         <link href='https://fonts.googleapis.com/css?family=Source Code Pro' rel='stylesheet'>
         <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
         <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet" />
-        <script type="text/javascript" src=" {{url_for('static', filename='script/script.js')}}" defer></script>
+        <script type="text/javascript" src=" {{url_for('static', filename='script/script.js')}}" async></script>
         {% endblock %}
     </head>
     {% with messages = get_flashed_messages(with_categories=true) %}
