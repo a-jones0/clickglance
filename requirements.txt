@@ -5,3 +5,4 @@ Flask-SQLAlchemy
 SQLAlchemy
 mysqlclient
 gunicorn
+jwt
