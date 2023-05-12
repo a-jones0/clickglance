@@ -112,3 +112,5 @@ Before starting this project, I had minimal coding experience with HTML, CSS, an
     * This tutorial was essential when setting up Flask-Mail and restructuring my project files. I believe I referenced Chapters 1-5 & 10, specifically looking for how to set up a configuration file, handle imports with the new project file structure, and send emails.
 * StackOverflow
   * For all the errors I couldn't figure out and the random questions I needed answers to.
+
+In addition, I'd also like to mention that [Tweek Calendar](https://tweek.so/) was a big inspiration for the aesthetics of this app - go check them out!
