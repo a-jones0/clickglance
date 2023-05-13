@@ -97,6 +97,8 @@ Before starting this project, I had minimal coding experience with HTML, CSS, an
     * [SQL Joins Explained |¦| Joins in SQL |¦| SQL Tutorial](https://youtu.be/9yeOJ0ZMUYw)
   * Web Dev Simplified
     * [How To Install MySQL (Server and Workbench)](https://youtu.be/u96rVINbAUI)
+  * dcode
+    * [Create Your Own Page Pre-Loader (HTML, CSS & JS) (No-jQuery Needed) - Web Design Tutorial](https://youtu.be/xuA83OYTE7I)
   * Vic Oyedeji
     * [How to Set Up FREE Email With Your Own Domain Name (2023) | Free Business Email] (https://www.youtube.com/watch?v=xdGG-9aKq74)
 * W3Schools Online Web Tutorials
@@ -104,6 +106,7 @@ Before starting this project, I had minimal coding experience with HTML, CSS, an
     * [CSS Tutorial](https://www.w3schools.com/css/default.asp)
     * [JavaScript Tutorial](https://www.w3schools.com/js/default.asp)
     * [SQL Tutorial](https://www.w3schools.com/sql/default.asp)
+    * [How To Make a Loader](https://www.w3schools.com/howto/howto_css_loader.asp)
 * [MySQL 8.0 Reference Manual](https://dev.mysql.com/doc/refman/8.0/en/)
 * [MySQL Tutorial](https://www.mysqltutorial.org/)
 * [Flask Documentation (2.3.x)](https://flask.palletsprojects.com/en/2.3.x/)
