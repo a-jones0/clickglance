@@ -35,6 +35,9 @@
         {% endif %}
     {% endwith %}
     <body>
+        <div class="loader-container">
+            <div class="loader-img"></div>
+        </div>
         {% block content %}
             <header id="page-header">
                 <div id="header-label">
@@ -452,5 +455,10 @@
             </div>
         {% endblock %}
             <div class="hidden-items" id="visited-page">{{visited}}</div>
+            <script type="text/javascript">
+                window.addEventListener("load", function(){
+                    document.querySelector(".loader-container").style.display = "none";
+                });
+            </script>
     </body>
 </html>
