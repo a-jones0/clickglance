@@ -100,7 +100,7 @@ Before starting this project, I had minimal coding experience with HTML, CSS, an
   * dcode
     * [Create Your Own Page Pre-Loader (HTML, CSS & JS) (No-jQuery Needed) - Web Design Tutorial](https://youtu.be/xuA83OYTE7I)
   * Vic Oyedeji
-    * [How to Set Up FREE Email With Your Own Domain Name (2023) | Free Business Email] (https://www.youtube.com/watch?v=xdGG-9aKq74)
+    * [How to Set Up FREE Email With Your Own Domain Name (2023) | Free Business Email](https://www.youtube.com/watch?v=xdGG-9aKq74)
 * W3Schools Online Web Tutorials
     * [HTML Tutorial](https://www.w3schools.com/html/default.asp)
     * [CSS Tutorial](https://www.w3schools.com/css/default.asp)
