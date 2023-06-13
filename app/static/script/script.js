@@ -1349,15 +1349,14 @@ function init(){
         let calendarColorCircle = document.getElementById("select-calendar-color-circle");
         // calendar value is in "color-CalendarName" format
         let [calendarColor, calendarName] = calendarSelect.value.split("-",2);
-        if(calendarName){   // undefined on index.html
-            document.getElementById("selected-calendar-header").innerHTML = calendarName;
-            // change the circle indicating calendar color
-            calendarColorCircle.style.backgroundColor = calendarColor;
-            calendarColorCircle.style.borderColor = calendarColor;
-            // change the modal color to match the calendar color
-            let modalColor = getComputedStyle(root).getPropertyValue('--'+calendarColor); // the color's custom rgba value as defined in the CSS stylesheet
-            root.style.setProperty('--create-item-modal-color', modalColor);
-        }   
+     
+        document.getElementById("selected-calendar-header").innerHTML = calendarName;
+        // change the circle indicating calendar color
+        calendarColorCircle.style.backgroundColor = calendarColor;
+        calendarColorCircle.style.borderColor = calendarColor;
+        // change the modal color to match the calendar color
+        let modalColor = getComputedStyle(root).getPropertyValue('--'+calendarColor); // the color's custom rgba value as defined in the CSS stylesheet
+        root.style.setProperty('--create-item-modal-color', modalColor);  
     }
 
     itemTypeSelect.onchange = changeItemModalOptions;
