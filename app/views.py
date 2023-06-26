@@ -238,7 +238,9 @@ def createItem():
         selected_calendar = request.form.get("selected-calendar")
 
         user_id = Users.query.filter_by(email=session["email"]).first().userId if "email" in session else 1
-        calId = Calendars.query.filter_by(userId=user_id, calName=selected_calendar.split("-",2)[1]).first().calId if "email" in session else 1
+        # calendar-select value is formatted as "calendarColor-calendarName"
+        # for string.split(), second parameter sets how many splits to do
+        calId = Calendars.query.filter_by(userId=user_id, calName=selected_calendar.split("-",1)[1]).first().calId if "email" in session else 1
 
         # assignment
         due_datetime24_str = twelveToTwentyFour(request.form.get("hour-picker1"), request.form.get("minute-picker1"), request.form.get("am-pm-picker1"))
