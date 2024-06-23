@@ -52,6 +52,11 @@ Fast forward to a few months after finishing college, and I wanted to learn some
 * MySQL & MySQL Workbench
 
 ## 5. Status
+
+### June 23, 2024
+PlanetScale, the platform used to host ClickGlance's MySQL database, has removed their free Hobby tier (_boo!_). PlanetScale has archived all existing data, but I will have to migrate the data off and find a new database host in order for ClickGlance to function again. It is unclear when and if this will ever happen.
+
+### Features Wishlist
 Although this project is technically complete and I don't have any immediate plans to continue working on it, there are quite a few features I would love to implement:
 
 * Item View Pane
